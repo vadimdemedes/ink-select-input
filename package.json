@@ -1,0 +1,91 @@
+{
+	"name": "ink-select-input",
+	"version": "0.0.0",
+	"description": "Select input component for Ink",
+	"license": "MIT",
+	"repository": "vadimdemedes/ink-select-input",
+	"author": {
+		"name": "Vadim Demedes",
+		"email": "vdemedes@gmail.com",
+		"url": "github.com/vadimdemedes"
+	},
+	"main": "dist/index.js",
+	"engines": {
+		"node": ">=6"
+	},
+	"scripts": {
+		"pretest": "npm run build",
+		"test": "xo && ava",
+		"build": "babel src --out-dir=dist",
+		"prepublish": "npm run build"
+	},
+	"files": [
+		"dist"
+	],
+	"keywords": [
+		"ink",
+		"ink-component"
+	],
+	"dependencies": {
+		"figures": "^2.0.0",
+		"lodash.isequal": "^4.5.0",
+		"prop-types": "^15.5.10"
+	},
+	"devDependencies": {
+		"ava": "^0.20.0",
+		"babel-cli": "^6.24.1",
+		"babel-plugin-transform-object-rest-spread": "^6.23.0",
+		"babel-plugin-transform-react-jsx": "^6.24.1",
+		"eslint-config-xo-react": "^0.13.0",
+		"eslint-plugin-react": "^7.1.0",
+		"ink": "^0.3.1",
+		"sinon": "^3.1.0",
+		"xo": "^0.18.2"
+	},
+	"babel": {
+		"plugins": [
+			[
+				"transform-react-jsx",
+				{
+					"pragma": "h",
+					"useBuiltIns": true
+				}
+			],
+			[
+				"transform-object-rest-spread",
+				{
+					"useBuiltIns": true
+				}
+			]
+		]
+	},
+	"ava": {
+		"babel": {
+			"presets": [
+				"@ava/stage-4"
+			],
+			"plugins": [
+				[
+					"transform-react-jsx",
+					{
+						"pragma": "h",
+						"useBuiltIns": true
+					}
+				]
+			]
+		}
+	},
+	"xo": {
+		"extends": [
+			"xo-react"
+		],
+		"rules": {
+			"react/no-unused-prop-types": 1
+		},
+		"settings": {
+			"react": {
+				"pragma": "h"
+			}
+		}
+	}
+}
