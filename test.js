@@ -103,7 +103,7 @@ test('list - ignore keypress if not focused', t => {
 	t.false(ref.setState.called);
 });
 
-test('list - move up', t => {
+test('list - move up with up key', t => {
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -133,7 +133,37 @@ test('list - move up', t => {
 	});
 });
 
-test('list - move to the end', t => {
+test('list - move up with k key', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const setRef = spy();
+
+	build(<SelectInput ref={setRef} items={items}/>);
+
+	const ref = setRef.firstCall.args[0];
+	spy(ref, 'setState');
+
+	ref.state = {
+		selectedIndex: 1
+	};
+
+	ref.handleKeyPress('', {
+		name: 'k'
+	});
+
+	t.true(ref.setState.calledOnce);
+	t.deepEqual(ref.setState.firstCall.args[0], {
+		selectedIndex: 0
+	});
+});
+
+test('list - move to the end with up key', t => {
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -159,7 +189,33 @@ test('list - move to the end', t => {
 	});
 });
 
-test('list - move down', t => {
+test('list - move to the end with k key', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const setRef = spy();
+
+	build(<SelectInput ref={setRef} items={items}/>);
+
+	const ref = setRef.firstCall.args[0];
+	spy(ref, 'setState');
+
+	ref.handleKeyPress('', {
+		name: 'k'
+	});
+
+	t.true(ref.setState.calledOnce);
+	t.deepEqual(ref.setState.firstCall.args[0], {
+		selectedIndex: 1
+	});
+});
+
+test('list - move down with down key', t => {
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -185,7 +241,33 @@ test('list - move down', t => {
 	});
 });
 
-test('list - move to the beginning', t => {
+test('list - move down with j key', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const setRef = spy();
+
+	build(<SelectInput ref={setRef} items={items}/>);
+
+	const ref = setRef.firstCall.args[0];
+	spy(ref, 'setState');
+
+	ref.handleKeyPress('', {
+		name: 'j'
+	});
+
+	t.true(ref.setState.calledOnce);
+	t.deepEqual(ref.setState.firstCall.args[0], {
+		selectedIndex: 1
+	});
+});
+
+test('list - move to the beginning with down key', t => {
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -207,6 +289,36 @@ test('list - move to the beginning', t => {
 
 	ref.handleKeyPress('', {
 		name: 'down'
+	});
+
+	t.true(ref.setState.calledOnce);
+	t.deepEqual(ref.setState.firstCall.args[0], {
+		selectedIndex: 0
+	});
+});
+
+test('list - move to the beginning with j key', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const setRef = spy();
+
+	build(<SelectInput ref={setRef} items={items}/>);
+
+	const ref = setRef.firstCall.args[0];
+	spy(ref, 'setState');
+
+	ref.state = {
+		selectedIndex: 1
+	};
+
+	ref.handleKeyPress('', {
+		name: 'j'
 	});
 
 	t.true(ref.setState.calledOnce);
