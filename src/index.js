@@ -82,7 +82,7 @@ class SelectInput extends Component {
 			return;
 		}
 
-		if (key.name === 'up') {
+		if (key.name === 'up' || key.name === 'k') {
 			const lastIndex = items.length - 1;
 			const atFirstIndex = selectedIndex === 0;
 
@@ -91,7 +91,7 @@ class SelectInput extends Component {
 			});
 		}
 
-		if (key.name === 'down') {
+		if (key.name === 'down' || key.name === 'j') {
 			const atLastIndex = selectedIndex === items.length - 1;
 
 			this.setState({
