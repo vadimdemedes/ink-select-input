@@ -82,15 +82,16 @@ class SelectInput extends Component {
 	handleKeyPress(ch, key) {
 		const {items, focus, limit, onSelect} = this.props;
 		const {rotateIndex, selectedIndex} = this.state;
+		const hasLimit = typeof limit === 'number';
 
 		if (focus === false) {
 			return;
 		}
 
 		if (key.name === 'up' || key.name === 'k') {
-			const lastIndex = (typeof limit === 'number' ? limit : items.length) - 1;
+			const lastIndex = (hasLimit ? limit : items.length) - 1;
 			const atFirstIndex = selectedIndex === 0;
-			const nextIndex = (typeof limit === 'number' ? selectedIndex : lastIndex);
+			const nextIndex = (hasLimit ? selectedIndex : lastIndex);
 
 			this.setState({
 				rotateIndex: atFirstIndex ? rotateIndex + 1 : rotateIndex,
@@ -99,8 +100,8 @@ class SelectInput extends Component {
 		}
 
 		if (key.name === 'down' || key.name === 'j') {
-			const atLastIndex = selectedIndex === (typeof limit === 'number' ? limit : items.length) - 1;
-			const nextIndex = (typeof limit === 'number' ? selectedIndex : 0);
+			const atLastIndex = selectedIndex === (hasLimit ? limit : items.length) - 1;
+			const nextIndex = (hasLimit ? selectedIndex : 0);
 
 			this.setState({
 				rotateIndex: atLastIndex ? rotateIndex - 1 : rotateIndex,
@@ -109,7 +110,7 @@ class SelectInput extends Component {
 		}
 
 		if (key.name === 'return') {
-			const slicedItems = typeof limit === 'number' ? arrRotate(items, rotateIndex).slice(0, limit) : items;
+			const slicedItems = hasLimit ? arrRotate(items, rotateIndex).slice(0, limit) : items;
 			onSelect(slicedItems[selectedIndex]);
 		}
 	}
