@@ -120,6 +120,7 @@ test('list - move up with up key', t => {
 	spy(ref, 'setState');
 
 	ref.state = {
+		rotateIndex: 0,
 		selectedIndex: 1
 	};
 
@@ -129,6 +130,7 @@ test('list - move up with up key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 0,
 		selectedIndex: 0
 	});
 });
@@ -150,6 +152,7 @@ test('list - move up with k key', t => {
 	spy(ref, 'setState');
 
 	ref.state = {
+		rotateIndex: 0,
 		selectedIndex: 1
 	};
 
@@ -159,6 +162,7 @@ test('list - move up with k key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 0,
 		selectedIndex: 0
 	});
 });
@@ -185,6 +189,7 @@ test('list - move to the end with up key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 1,
 		selectedIndex: 1
 	});
 });
@@ -211,6 +216,7 @@ test('list - move to the end with k key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 1,
 		selectedIndex: 1
 	});
 });
@@ -237,6 +243,7 @@ test('list - move down with down key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 0,
 		selectedIndex: 1
 	});
 });
@@ -263,6 +270,7 @@ test('list - move down with j key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 0,
 		selectedIndex: 1
 	});
 });
@@ -284,6 +292,7 @@ test('list - move to the beginning with down key', t => {
 	spy(ref, 'setState');
 
 	ref.state = {
+		rotateIndex: 0,
 		selectedIndex: 1
 	};
 
@@ -293,6 +302,7 @@ test('list - move to the beginning with down key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: -1,
 		selectedIndex: 0
 	});
 });
@@ -314,6 +324,7 @@ test('list - move to the beginning with j key', t => {
 	spy(ref, 'setState');
 
 	ref.state = {
+		rotateIndex: 0,
 		selectedIndex: 1
 	};
 
@@ -323,6 +334,7 @@ test('list - move to the beginning with j key', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: -1,
 		selectedIndex: 0
 	});
 });
@@ -352,6 +364,7 @@ test('list - reset selection on new items', t => {
 	spy(ref, 'setState');
 
 	ref.state = {
+		rotateIndex: 1,
 		selectedIndex: 1
 	};
 
@@ -361,6 +374,56 @@ test('list - reset selection on new items', t => {
 
 	t.true(ref.setState.calledOnce);
 	t.deepEqual(ref.setState.firstCall.args[0], {
+		rotateIndex: 0,
 		selectedIndex: 0
 	});
+});
+
+test('list - limit', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	t.is(renderToString(<SelectInput items={items} limit={1}/>), renderToString((
+		<span>
+			<div>
+				<Indicator isSelected/>
+				<Item isSelected label="First"/>
+			</div>
+		</span>
+	)));
+});
+
+test('list - onSelect with limit', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const setRef = spy();
+	const onSelect = spy();
+
+	build(<SelectInput ref={setRef} items={items} limit={1} onSelect={onSelect}/>);
+
+	const ref = setRef.firstCall.args[0];
+	spy(ref, 'setState');
+
+	ref.state = {
+		rotateIndex: -1,
+		selectedIndex: 0
+	};
+
+	ref.handleKeyPress('', {
+		name: 'return'
+	});
+
+	t.true(onSelect.calledOnce);
+	t.deepEqual(onSelect.firstCall.args, [items[1]]);
 });

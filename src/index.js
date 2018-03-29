@@ -4,6 +4,7 @@ const {h, Text, Component} = require('ink');
 const PropTypes = require('prop-types');
 const isEqual = require('lodash.isequal');
 const figures = require('figures');
+const arrRotate = require('arr-rotate');
 
 const noop = () => {};
 
@@ -39,14 +40,17 @@ class SelectInput extends Component {
 		super(props);
 
 		this.state = {
+			rotateIndex: 0,
 			selectedIndex: 0
 		};
 
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 
-	render({items, indicatorComponent, itemComponent}, {selectedIndex}) {
-		return items.map((item, index) => {
+	render({items, indicatorComponent, itemComponent, limit}, {rotateIndex, selectedIndex}) {
+		const slicedItems = typeof limit === 'number' ? arrRotate(items, rotateIndex).slice(0, limit) : items;
+
+		return slicedItems.map((item, index) => {
 			const isSelected = index === selectedIndex;
 
 			return (
@@ -69,38 +73,44 @@ class SelectInput extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.items, nextProps.items)) {
 			this.setState({
+				rotateIndex: 0,
 				selectedIndex: 0
 			});
 		}
 	}
 
 	handleKeyPress(ch, key) {
-		const {items, focus, onSelect} = this.props;
-		const {selectedIndex} = this.state;
+		const {items, focus, limit, onSelect} = this.props;
+		const {rotateIndex, selectedIndex} = this.state;
 
 		if (focus === false) {
 			return;
 		}
 
 		if (key.name === 'up' || key.name === 'k') {
-			const lastIndex = items.length - 1;
+			const lastIndex = (typeof limit === 'number' ? limit : items.length) - 1;
 			const atFirstIndex = selectedIndex === 0;
+			const nextIndex = (typeof limit === 'number' ? selectedIndex : lastIndex);
 
 			this.setState({
-				selectedIndex: atFirstIndex ? lastIndex : selectedIndex - 1
+				rotateIndex: atFirstIndex ? rotateIndex + 1 : rotateIndex,
+				selectedIndex: atFirstIndex ? nextIndex : selectedIndex - 1
 			});
 		}
 
 		if (key.name === 'down' || key.name === 'j') {
-			const atLastIndex = selectedIndex === items.length - 1;
+			const atLastIndex = selectedIndex === (typeof limit === 'number' ? limit : items.length) - 1;
+			const nextIndex = (typeof limit === 'number' ? selectedIndex : 0);
 
 			this.setState({
-				selectedIndex: atLastIndex ? 0 : selectedIndex + 1
+				rotateIndex: atLastIndex ? rotateIndex - 1 : rotateIndex,
+				selectedIndex: atLastIndex ? nextIndex : selectedIndex + 1
 			});
 		}
 
 		if (key.name === 'return') {
-			onSelect(items[selectedIndex]);
+			const slicedItems = typeof limit === 'number' ? arrRotate(items, rotateIndex).slice(0, limit) : items;
+			onSelect(slicedItems[selectedIndex]);
 		}
 	}
 }
@@ -110,6 +120,7 @@ SelectInput.propTypes = {
 	focus: PropTypes.bool,
 	indicatorComponent: PropTypes.func,
 	itemComponent: PropTypes.func,
+	limit: PropTypes.number,
 	onSelect: PropTypes.func
 };
 
@@ -118,6 +129,7 @@ SelectInput.defaultProps = {
 	focus: true,
 	indicatorComponent: Indicator,
 	itemComponent: Item,
+	limit: null,
 	onSelect: noop
 };
 

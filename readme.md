@@ -75,7 +75,13 @@ Type: `Component`
 
 Custom component to override the default item component.
 
+### limit
+
+Type: `number`
+
+Number of items to display.
+
 
 ## License
 
-MIT © [Vadim Demedes](http://github.com/vadimdemedes)
+MIT Â© [Vadim Demedes](http://github.com/vadimdemedes)
