@@ -84,4 +84,4 @@ Number of items to display.
 
 ## License
 
-MIT Â© [Vadim Demedes](http://github.com/vadimdemedes)
+MIT © [Vadim Demedes](http://github.com/vadimdemedes)
