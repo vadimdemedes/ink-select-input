@@ -32,15 +32,15 @@
 		"prop-types": "^15.5.10"
 	},
 	"devDependencies": {
-		"ava": "^0.20.0",
+		"ava": "^0.25.0",
 		"babel-cli": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.23.0",
 		"babel-plugin-transform-react-jsx": "^6.24.1",
-		"eslint-config-xo-react": "^0.13.0",
+		"eslint-config-xo-react": "^0.16.0",
 		"eslint-plugin-react": "^7.1.0",
-		"ink": "^0.3.1",
-		"sinon": "^3.1.0",
-		"xo": "^0.18.2"
+		"ink": "^0.4.1",
+		"sinon": "^4.4.9",
+		"xo": "^0.20.3"
 	},
 	"babel": {
 		"plugins": [

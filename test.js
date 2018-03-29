@@ -93,7 +93,7 @@ test('list - ignore keypress if not focused', t => {
 
 	build(<SelectInput ref={setRef} focus={false}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.handleKeyPress('', {
@@ -116,7 +116,7 @@ test('list - move up with up key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.state = {
@@ -146,7 +146,7 @@ test('list - move up with k key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.state = {
@@ -176,7 +176,7 @@ test('list - move to the end with up key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.handleKeyPress('', {
@@ -202,7 +202,7 @@ test('list - move to the end with k key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.handleKeyPress('', {
@@ -228,7 +228,7 @@ test('list - move down with down key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.handleKeyPress('', {
@@ -254,7 +254,7 @@ test('list - move down with j key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.handleKeyPress('', {
@@ -280,7 +280,7 @@ test('list - move to the beginning with down key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.state = {
@@ -310,7 +310,7 @@ test('list - move to the beginning with j key', t => {
 
 	build(<SelectInput ref={setRef} items={items}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.state = {
@@ -348,7 +348,7 @@ test('list - reset selection on new items', t => {
 
 	build(<SelectInput ref={setRef} items={firstItems}/>);
 
-	const ref = setRef.firstCall.args[0];
+	const [ref] = setRef.firstCall.args;
 	spy(ref, 'setState');
 
 	ref.state = {
