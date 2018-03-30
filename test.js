@@ -412,8 +412,7 @@ test('list - onSelect with limit', t => {
 
 	build(<SelectInput ref={setRef} items={items} limit={1} onSelect={onSelect}/>);
 
-	const ref = setRef.firstCall.args[0];
-	spy(ref, 'setState');
+	const [ref] = setRef.firstCall.args;
 
 	ref.state = {
 		rotateIndex: -1,
