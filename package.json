@@ -39,7 +39,7 @@
 		"babel-plugin-transform-react-jsx": "^6.24.1",
 		"eslint-config-xo-react": "^0.16.0",
 		"eslint-plugin-react": "^7.1.0",
-		"ink": "^0.4.1",
+		"ink": "^0.5.0",
 		"sinon": "^4.4.9",
 		"xo": "^0.20.3"
 	},
