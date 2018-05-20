@@ -1,4 +1,4 @@
-import {h, build, renderToString, Text} from 'ink';
+import {h, build, renderToString, Color} from 'ink';
 import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
@@ -10,9 +10,9 @@ test('indicator', t => {
 
 test('indicator - selected', t => {
 	t.is(renderToString(<Indicator isSelected/>), renderToString((
-		<Text blue>
+		<Color blue>
 			{`${figures.pointer} `}
-		</Text>
+		</Color>
 	)));
 });
 
@@ -22,9 +22,9 @@ test('item', t => {
 
 test('item - selected', t => {
 	t.is(renderToString(<Item isSelected label="Test"/>), renderToString((
-		<Text blue>
+		<Color blue>
 			Test
-		</Text>
+		</Color>
 	)));
 });
 

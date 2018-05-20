@@ -1,6 +1,6 @@
 'use strict';
 
-const {h, Text, Component} = require('ink');
+const {h, Color, Component} = require('ink');
 const PropTypes = require('prop-types');
 const isEqual = require('lodash.isequal');
 const figures = require('figures');
@@ -14,9 +14,9 @@ const Indicator = ({isSelected}) => {
 	}
 
 	return (
-		<Text blue>
+		<Color blue>
 			{`${figures.pointer} `}
-		</Text>
+		</Color>
 	);
 };
 
@@ -25,9 +25,9 @@ Indicator.propTypes = {
 };
 
 const Item = ({isSelected, label}) => (
-	<Text blue={isSelected}>
+	<Color blue={isSelected}>
 		{label}
-	</Text>
+	</Color>
 );
 
 Item.propTypes = {
