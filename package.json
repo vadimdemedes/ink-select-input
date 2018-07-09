@@ -81,7 +81,8 @@
 			"xo-react"
 		],
 		"rules": {
-			"react/no-unused-prop-types": 1
+			"react/no-unused-prop-types": 1,
+			"react/no-deprecated": 1
 		},
 		"settings": {
 			"react": {
