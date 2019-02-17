@@ -1,11 +1,40 @@
-import {h, build, renderToString, Color} from 'ink';
+import EventEmitter from 'events';
+import React from 'react';
+import {render, renderToString, Box, Color} from 'ink';
 import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
 import SelectInput, {Indicator, Item} from '.';
 
+const ARROW_UP = '\u001B[A';
+const ARROW_DOWN = '\u001B[B';
+const ENTER = '\r';
+
+const createInkOptions = () => {
+	const stdin = new EventEmitter();
+	stdin.setRawMode = () => {};
+	stdin.setEncoding = () => {};
+
+	const options = {
+		stdin,
+		stdout: {
+			columns: 100,
+			write: spy()
+		},
+		debug: true
+	};
+
+	return options;
+};
+
 test('indicator', t => {
-	t.is(renderToString(<Indicator/>), ' ');
+	const output = renderToString((
+		<Box>
+			<Indicator/>X
+		</Box>
+	));
+
+	t.is(output, ' X');
 });
 
 test('indicator - selected', t => {
@@ -29,6 +58,7 @@ test('item - selected', t => {
 });
 
 test('list', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -37,22 +67,28 @@ test('list', t => {
 		value: 'second'
 	}];
 
-	t.is(renderToString(<SelectInput items={items}/>), renderToString((
-		<span>
-			<div>
+	render(<SelectInput items={items}/>, options);
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
 				<Indicator isSelected/>
 				<Item isSelected label="First"/>
-			</div>
+			</Box>
 
-			<div>
+			<Box>
 				<Indicator/>
 				<Item label="Second"/>
-			</div>
-		</span>
-	)));
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
 });
 
 test('list - custom indicator', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'Test',
 		value: 'test'
@@ -60,17 +96,23 @@ test('list - custom indicator', t => {
 
 	const CustomIndicator = () => 'X ';
 
-	t.is(renderToString(<SelectInput items={items} indicatorComponent={CustomIndicator}/>), renderToString((
-		<span>
-			<div>
+	render(<SelectInput items={items} indicatorComponent={CustomIndicator}/>, options);
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
 				<CustomIndicator/>
 				<Item isSelected label="Test"/>
-			</div>
-		</span>
-	)));
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
 });
 
 test('list - custom item', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'Test',
 		value: 'test'
@@ -78,32 +120,23 @@ test('list - custom item', t => {
 
 	const CustomItem = ({label}) => `- ${label}`;
 
-	t.is(renderToString(<SelectInput items={items} itemComponent={CustomItem}/>), renderToString((
-		<span>
-			<div>
+	render(<SelectInput items={items} itemComponent={CustomItem}/>, options);
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
 				<Indicator isSelected/>
 				<CustomItem label="Test"/>
-			</div>
-		</span>
-	)));
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
 });
 
-test('list - ignore keypress if not focused', t => {
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} focus={false}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.handleKeyPress('', {
-		name: 'up'
-	});
-
-	t.false(ref.setState.called);
-});
-
-test('list - move up with up key', t => {
+test('list - ignore input if not focused', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -112,30 +145,232 @@ test('list - move up with up key', t => {
 		value: 'second'
 	}];
 
-	const setRef = spy();
+	render(<SelectInput focus={false} items={items}/>, options);
+	options.stdin.emit('data', ARROW_DOWN);
 
-	build(<SelectInput ref={setRef} items={items}/>);
+	const actual = options.stdout.write.lastCall.args[0];
 
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="First"/>
+			</Box>
 
-	ref.state = {
-		rotateIndex: 0,
-		selectedIndex: 1
-	};
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+		</Box>
+	));
 
-	ref.handleKeyPress('', {
-		name: 'up'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 0,
-		selectedIndex: 0
-	});
+	t.is(actual, expected);
 });
 
-test('list - move up with k key', t => {
+test('list - move up with up arrow key', t => {
+	const options = createInkOptions();
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', ARROW_UP);
+
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+});
+
+test('list - move up with K key', t => {
+	const options = createInkOptions();
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', 'k');
+
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+});
+
+test('list - move down with arrow down key', t => {
+	const options = createInkOptions();
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', ARROW_DOWN);
+
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+});
+
+test('list - move down with J key', t => {
+	const options = createInkOptions();
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', 'j');
+
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+});
+
+test('list - move to the beginning of the list after reaching the end', t => {
+	const options = createInkOptions();
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', ARROW_DOWN);
+	options.stdin.emit('data', ARROW_DOWN);
+	options.stdin.emit('data', ARROW_DOWN);
+
+	const actual = options.stdout.write.lastCall.args[0];
+
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+});
+
+test('list - reset selection when new items are received', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -144,211 +379,10 @@ test('list - move up with k key', t => {
 		value: 'second'
 	}];
 
-	const setRef = spy();
+	render(<SelectInput items={items}/>, options);
+	options.stdin.emit('data', ARROW_DOWN);
 
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.state = {
-		rotateIndex: 0,
-		selectedIndex: 1
-	};
-
-	ref.handleKeyPress('', {
-		name: 'k'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 0,
-		selectedIndex: 0
-	});
-});
-
-test('list - move to the end with up key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.handleKeyPress('', {
-		name: 'up'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 1,
-		selectedIndex: 1
-	});
-});
-
-test('list - move to the end with k key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.handleKeyPress('', {
-		name: 'k'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 1,
-		selectedIndex: 1
-	});
-});
-
-test('list - move down with down key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.handleKeyPress('', {
-		name: 'down'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 0,
-		selectedIndex: 1
-	});
-});
-
-test('list - move down with j key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.handleKeyPress('', {
-		name: 'j'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 0,
-		selectedIndex: 1
-	});
-});
-
-test('list - move to the beginning with down key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.state = {
-		rotateIndex: 0,
-		selectedIndex: 1
-	};
-
-	ref.handleKeyPress('', {
-		name: 'down'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: -1,
-		selectedIndex: 0
-	});
-});
-
-test('list - move to the beginning with j key', t => {
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const setRef = spy();
-
-	build(<SelectInput ref={setRef} items={items}/>);
-
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
-
-	ref.state = {
-		rotateIndex: 0,
-		selectedIndex: 1
-	};
-
-	ref.handleKeyPress('', {
-		name: 'j'
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: -1,
-		selectedIndex: 0
-	});
-});
-
-test('list - reset selection on new items', t => {
-	const firstItems = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}];
-
-	const secondItems = [{
+	const newItems = [{
 		label: 'Third',
 		value: 'third'
 	}, {
@@ -356,49 +390,84 @@ test('list - reset selection on new items', t => {
 		value: 'fourth'
 	}];
 
-	const setRef = spy();
+	render(<SelectInput items={newItems}/>, options);
 
-	build(<SelectInput ref={setRef} items={firstItems}/>);
+	const actual = options.stdout.write.lastCall.args[0];
 
-	const [ref] = setRef.firstCall.args;
-	spy(ref, 'setState');
+	const expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
 
-	ref.state = {
-		rotateIndex: 1,
-		selectedIndex: 1
-	};
+			<Box>
+				<Indicator/>
+				<Item label="Fourth"/>
+			</Box>
+		</Box>
+	));
 
-	ref.componentWillReceiveProps({
-		items: secondItems
-	});
-
-	t.true(ref.setState.calledOnce);
-	t.deepEqual(ref.setState.firstCall.args[0], {
-		rotateIndex: 0,
-		selectedIndex: 0
-	});
+	t.is(actual, expected);
 });
 
-test('list - limit', t => {
+test('list - item limit', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
 	}, {
 		label: 'Second',
 		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
 	}];
 
-	t.is(renderToString(<SelectInput items={items} limit={1}/>), renderToString((
-		<span>
-			<div>
+	render(<SelectInput items={items} limit={2}/>, options);
+
+	let actual = options.stdout.write.lastCall.args[0];
+
+	let expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
 				<Indicator isSelected/>
 				<Item isSelected label="First"/>
-			</div>
-		</span>
-	)));
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
+
+	options.stdin.emit('data', ARROW_DOWN);
+	options.stdin.emit('data', ARROW_DOWN);
+
+	actual = options.stdout.write.lastCall.args[0];
+
+	expected = renderToString((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual, expected);
 });
 
-test('list - onSelect with limit', t => {
+test('list - handle enter', t => {
+	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -407,22 +476,13 @@ test('list - onSelect with limit', t => {
 		value: 'second'
 	}];
 
-	const setRef = spy();
 	const onSelect = spy();
 
-	build(<SelectInput ref={setRef} items={items} limit={1} onSelect={onSelect}/>);
+	render(<SelectInput items={items} onSelect={onSelect}/>, options);
 
-	const [ref] = setRef.firstCall.args;
-
-	ref.state = {
-		rotateIndex: -1,
-		selectedIndex: 0
-	};
-
-	ref.handleKeyPress('', {
-		name: 'return'
-	});
+	options.stdin.emit('data', ARROW_DOWN);
+	options.stdin.emit('data', ENTER);
 
 	t.true(onSelect.calledOnce);
-	t.deepEqual(onSelect.firstCall.args, [items[1]]);
+	t.deepEqual(onSelect.firstCall.args[0], items[1]);
 });
