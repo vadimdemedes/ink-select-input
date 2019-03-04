@@ -11,7 +11,7 @@ const Indicator = ({isSelected}) => (
 					{figures.pointer}
 				</Color>
 			)
-			: {' '}
+			: ' '
 		}
 	</Box>
 );
