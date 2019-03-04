@@ -13,8 +13,9 @@ $ npm install ink-select-input
 ## Usage
 
 ```jsx
-const {h, render, Component} = require('ink');
-const SelectInput = require('ink-select-input');
+import React from 'react';
+import {render} from 'ink';
+import SelectInput from 'ink-select-input';
 
 const Demo = () => {
 	const handleSelect = item => {
