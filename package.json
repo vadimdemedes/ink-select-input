@@ -41,7 +41,7 @@
 		"babel-eslint": "^10.0.1",
 		"eslint-config-xo-react": "^0.16.0",
 		"eslint-plugin-react": "^7.1.0",
-		"ink": "^2.0.0-12",
+		"ink": "^2.0.0",
 		"react": "^16.8.2",
 		"sinon": "^4.4.9",
 		"xo": "*"

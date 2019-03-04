@@ -1,10 +1,37 @@
 import EventEmitter from 'events';
 import React from 'react';
-import {render, renderToString, Box, Color} from 'ink';
+import {render, Box, Color} from 'ink';
 import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
 import SelectInput, {Indicator, Item} from '.';
+
+// Fake process.stdout
+class Stream {
+	constructor() {
+		this.output = '';
+		this.columns = 100;
+	}
+
+	write(str) {
+		this.output = str;
+	}
+
+	get() {
+		return this.output;
+	}
+}
+
+const renderToString = node => {
+	const stream = new Stream();
+
+	render(node, {
+		stdout: stream,
+		debug: true
+	});
+
+	return stream.get();
+};
 
 const ARROW_UP = '\u001B[A';
 const ARROW_DOWN = '\u001B[B';
