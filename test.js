@@ -41,6 +41,7 @@ const createInkOptions = () => {
 	const stdin = new EventEmitter();
 	stdin.setRawMode = () => {};
 	stdin.setEncoding = () => {};
+	stdin.resume = () => {};
 
 	const options = {
 		stdin,
@@ -61,13 +62,13 @@ test('indicator', t => {
 		</Box>
 	));
 
-	t.is(output, ' X');
+	t.is(output, '  X');
 });
 
 test('indicator - selected', t => {
 	t.is(renderToString(<Indicator isSelected/>), renderToString((
 		<Color blue>
-			{`${figures.pointer} `}
+			{figures.pointer}
 		</Color>
 	)));
 });
