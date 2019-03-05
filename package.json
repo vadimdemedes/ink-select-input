@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Select input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-select-input",
