@@ -1,92 +1,46 @@
-import EventEmitter from 'events';
 import React from 'react';
-import {render, Box, Color} from 'ink';
+import {Box, Color} from 'ink';
+import {render} from 'ink-testing-library';
 import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
 import SelectInput, {Indicator, Item} from '.';
 
-// Fake process.stdout
-class Stream {
-	constructor() {
-		this.output = '';
-		this.columns = 100;
-	}
-
-	write(str) {
-		this.output = str;
-	}
-
-	get() {
-		return this.output;
-	}
-}
-
-const renderToString = node => {
-	const stream = new Stream();
-
-	render(node, {
-		stdout: stream,
-		debug: true
-	});
-
-	return stream.get();
-};
-
 const ARROW_UP = '\u001B[A';
 const ARROW_DOWN = '\u001B[B';
 const ENTER = '\r';
 
-const createInkOptions = () => {
-	const stdin = new EventEmitter();
-	stdin.setRawMode = () => {};
-	stdin.setEncoding = () => {};
-	stdin.resume = () => {};
-
-	const options = {
-		stdin,
-		stdout: {
-			columns: 100,
-			write: spy()
-		},
-		debug: true
-	};
-
-	return options;
-};
-
 test('indicator', t => {
-	const output = renderToString((
+	const {lastFrame} = render((
 		<Box>
 			<Indicator/>X
 		</Box>
 	));
 
-	t.is(output, '  X');
+	t.is(lastFrame(), '  X');
 });
 
 test('indicator - selected', t => {
-	t.is(renderToString(<Indicator isSelected/>), renderToString((
-		<Color blue>
-			{figures.pointer}
-		</Color>
-	)));
+	const actual = render(<Indicator isSelected/>);
+	const expected = render(<Color blue>{figures.pointer}</Color>);
+
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('item', t => {
-	t.is(renderToString(<Item label="Test"/>), 'Test');
+	const {lastFrame} = render(<Item label="Test"/>);
+
+	t.is(lastFrame(), 'Test');
 });
 
 test('item - selected', t => {
-	t.is(renderToString(<Item isSelected label="Test"/>), renderToString((
-		<Color blue>
-			Test
-		</Color>
-	)));
+	const actual = render(<Item isSelected label="Test"/>);
+	const expected = render(<Color blue>Test</Color>);
+
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -95,10 +49,9 @@ test('list', t => {
 		value: 'second'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	const actual = options.stdout.write.lastCall.args[0];
+	const actual = render(<SelectInput items={items}/>);
 
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -112,11 +65,10 @@ test('list', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - custom indicator', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'Test',
 		value: 'test'
@@ -124,10 +76,9 @@ test('list - custom indicator', t => {
 
 	const CustomIndicator = () => 'X ';
 
-	render(<SelectInput items={items} indicatorComponent={CustomIndicator}/>, options);
-	const actual = options.stdout.write.lastCall.args[0];
+	const actual = render(<SelectInput items={items} indicatorComponent={CustomIndicator}/>);
 
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<CustomIndicator/>
@@ -136,11 +87,10 @@ test('list - custom indicator', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - custom item', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'Test',
 		value: 'test'
@@ -148,10 +98,9 @@ test('list - custom item', t => {
 
 	const CustomItem = ({label}) => `- ${label}`;
 
-	render(<SelectInput items={items} itemComponent={CustomItem}/>, options);
-	const actual = options.stdout.write.lastCall.args[0];
+	const actual = render(<SelectInput items={items} itemComponent={CustomItem}/>);
 
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -160,11 +109,10 @@ test('list - custom item', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - ignore input if not focused', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -173,12 +121,10 @@ test('list - ignore input if not focused', t => {
 		value: 'second'
 	}];
 
-	render(<SelectInput focus={false} items={items}/>, options);
-	options.stdin.emit('data', ARROW_DOWN);
+	const actual = render(<SelectInput focus={false} items={items}/>);
+	actual.stdin.write(ARROW_DOWN);
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -192,11 +138,10 @@ test('list - ignore input if not focused', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - move up with up arrow key', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -208,12 +153,10 @@ test('list - move up with up arrow key', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', ARROW_UP);
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write(ARROW_UP);
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator/>
@@ -232,11 +175,10 @@ test('list - move up with up arrow key', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - move up with K key', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -248,12 +190,10 @@ test('list - move up with K key', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', 'k');
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write('k');
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator/>
@@ -272,11 +212,10 @@ test('list - move up with K key', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - move down with arrow down key', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -288,12 +227,10 @@ test('list - move down with arrow down key', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', ARROW_DOWN);
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write(ARROW_DOWN);
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator/>
@@ -312,11 +249,10 @@ test('list - move down with arrow down key', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - move down with J key', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -328,12 +264,10 @@ test('list - move down with J key', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', 'j');
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write('j');
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator/>
@@ -352,11 +286,10 @@ test('list - move down with J key', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - move to the beginning of the list after reaching the end', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -368,14 +301,12 @@ test('list - move to the beginning of the list after reaching the end', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', ARROW_DOWN);
-	options.stdin.emit('data', ARROW_DOWN);
-	options.stdin.emit('data', ARROW_DOWN);
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -394,11 +325,10 @@ test('list - move to the beginning of the list after reaching the end', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - reset selection when new items are received', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -407,8 +337,8 @@ test('list - reset selection when new items are received', t => {
 		value: 'second'
 	}];
 
-	render(<SelectInput items={items}/>, options);
-	options.stdin.emit('data', ARROW_DOWN);
+	const actual = render(<SelectInput items={items}/>);
+	actual.stdin.write(ARROW_DOWN);
 
 	const newItems = [{
 		label: 'Third',
@@ -418,11 +348,9 @@ test('list - reset selection when new items are received', t => {
 		value: 'fourth'
 	}];
 
-	render(<SelectInput items={newItems}/>, options);
+	actual.rerender(<SelectInput items={newItems}/>);
 
-	const actual = options.stdout.write.lastCall.args[0];
-
-	const expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -436,11 +364,10 @@ test('list - reset selection when new items are received', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - item limit', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -452,11 +379,9 @@ test('list - item limit', t => {
 		value: 'third'
 	}];
 
-	render(<SelectInput items={items} limit={2}/>, options);
+	const actual = render(<SelectInput items={items} limit={2}/>);
 
-	let actual = options.stdout.write.lastCall.args[0];
-
-	let expected = renderToString((
+	const expected = render((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator isSelected/>
@@ -470,14 +395,12 @@ test('list - item limit', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 
-	options.stdin.emit('data', ARROW_DOWN);
-	options.stdin.emit('data', ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
 
-	actual = options.stdout.write.lastCall.args[0];
-
-	expected = renderToString((
+	expected.rerender((
 		<Box flexDirection="column">
 			<Box>
 				<Indicator/>
@@ -491,11 +414,10 @@ test('list - item limit', t => {
 		</Box>
 	));
 
-	t.is(actual, expected);
+	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
 test('list - handle enter', t => {
-	const options = createInkOptions();
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -505,11 +427,10 @@ test('list - handle enter', t => {
 	}];
 
 	const onSelect = spy();
+	const {stdin} = render(<SelectInput items={items} onSelect={onSelect}/>);
 
-	render(<SelectInput items={items} onSelect={onSelect}/>, options);
-
-	options.stdin.emit('data', ARROW_DOWN);
-	options.stdin.emit('data', ENTER);
+	stdin.write(ARROW_DOWN);
+	stdin.write(ENTER);
 
 	t.true(onSelect.calledOnce);
 	t.deepEqual(onSelect.firstCall.args[0], items[1]);
