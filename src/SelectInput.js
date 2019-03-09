@@ -35,10 +35,11 @@ class SelectInput extends PureComponent {
 	}
 
 	render() {
-		const {items, indicatorComponent, itemComponent, limit} = this.props;
+		const {items, indicatorComponent, itemComponent} = this.props;
 		const {rotateIndex, selectedIndex} = this.state;
+		const limit = this.getLimit();
 
-		const slicedItems = typeof limit === 'number' ? arrRotate(items, rotateIndex).slice(0, limit) : items;
+		const slicedItems = this.hasLimit() ? arrRotate(items, rotateIndex).slice(0, limit) : items;
 
 		return (
 			<Box flexDirection="column">
@@ -80,9 +81,10 @@ class SelectInput extends PureComponent {
 	}
 
 	handleInput = data => {
-		const {items, focus, limit, onSelect} = this.props;
+		const {items, focus, onSelect} = this.props;
 		const {rotateIndex, selectedIndex} = this.state;
-		const hasLimit = typeof limit === 'number';
+		const hasLimit = this.hasLimit();
+		const limit = this.getLimit();
 
 		if (focus === false) {
 			return;
@@ -115,6 +117,22 @@ class SelectInput extends PureComponent {
 			const slicedItems = hasLimit ? arrRotate(items, rotateIndex).slice(0, limit) : items;
 			onSelect(slicedItems[selectedIndex]);
 		}
+	}
+
+	hasLimit = () => {
+		const {limit, items} = this.props;
+
+		return typeof limit === 'number' && items.length > limit;
+	}
+
+	getLimit = () => {
+		const {limit, items} = this.props;
+
+		if (this.hasLimit()) {
+			return Math.min(limit, items.length);
+		}
+
+		return items.length;
 	}
 }
 

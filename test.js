@@ -435,3 +435,66 @@ test('list - handle enter', t => {
 	t.true(onSelect.calledOnce);
 	t.deepEqual(onSelect.firstCall.args[0], items[1]);
 });
+
+test('list - don\'t rotate when there are less items than limit', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const actual = render(<SelectInput items={items} limit={4}/>);
+	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
+
+	const expected = render((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+});
+
+test('list - rotate when there are more items than limit', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
+	}];
+
+	const actual = render(<SelectInput items={items} limit={2}/>);
+	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(ARROW_DOWN);
+
+	const expected = render((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+});
