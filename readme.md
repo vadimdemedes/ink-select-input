@@ -49,7 +49,8 @@ render(<Demo/>);
 Type: `array`<br>
 Default: `[]`
 
-Items to display in a list. Each item must be an object and have `label` and `value` props.
+Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
+If no `key` prop is provided, `value` will be used as the item key.
 
 ### focus
 
