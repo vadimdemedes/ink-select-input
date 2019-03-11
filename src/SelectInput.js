@@ -14,6 +14,7 @@ class SelectInput extends PureComponent {
 	static propTypes = {
 		items: PropTypes.array,
 		focus: PropTypes.bool,
+		initialIndex: PropTypes.number,
 		indicatorComponent: PropTypes.func,
 		itemComponent: PropTypes.func,
 		limit: PropTypes.number,
@@ -23,6 +24,7 @@ class SelectInput extends PureComponent {
 	static defaultProps = {
 		items: [],
 		focus: true,
+		initialIndex: 0,
 		indicatorComponent: Indicator,
 		itemComponent: Item,
 		limit: null,
@@ -31,7 +33,7 @@ class SelectInput extends PureComponent {
 
 	state = {
 		rotateIndex: 0,
-		selectedIndex: 0
+		selectedIndex: this.props.initialIndex
 	}
 
 	render() {

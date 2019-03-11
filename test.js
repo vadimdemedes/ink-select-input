@@ -68,6 +68,34 @@ test('list', t => {
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
+test('list - initial index', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const actual = render(<SelectInput items={items} initialIndex={1}/>);
+
+	const expected = render((
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Second"/>
+			</Box>
+		</Box>
+	));
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+});
+
 test('list - custom indicator', t => {
 	const items = [{
 		label: 'Test',
