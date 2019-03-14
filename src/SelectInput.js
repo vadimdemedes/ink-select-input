@@ -18,7 +18,8 @@ class SelectInput extends PureComponent {
 		indicatorComponent: PropTypes.func,
 		itemComponent: PropTypes.func,
 		limit: PropTypes.number,
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
+		onChange: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -28,7 +29,8 @@ class SelectInput extends PureComponent {
 		indicatorComponent: Indicator,
 		itemComponent: Item,
 		limit: null,
-		onSelect() {}
+		onSelect() {},
+		onChange() {}
 	}
 
 	state = {
@@ -73,12 +75,21 @@ class SelectInput extends PureComponent {
 		setRawMode(false);
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 		if (!isEqual(prevProps.items, this.props.items)) {
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
 				rotateIndex: 0,
 				selectedIndex: 0
 			});
+		}
+
+		if (prevState.selectedIndex !== this.state.selectedIndex) {
+			const {onChange, items} = this.props;
+			const {rotateIndex, selectedIndex} = this.state;
+			const hasLimit = this.hasLimit();
+			const limit = this.getLimit();
+			const slicedItems = hasLimit ? arrRotate(items, rotateIndex).slice(0, limit) : items;
+			onChange(slicedItems[selectedIndex]);
 		}
 	}
 

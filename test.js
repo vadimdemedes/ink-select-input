@@ -526,3 +526,20 @@ test('list - rotate when there are more items than limit', t => {
 
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
+
+test('list - onChange', t => {
+	const items = [{
+		label: 'First',
+		value: 'first'
+	}, {
+		label: 'Second',
+		value: 'second'
+	}];
+
+	const onChange = spy();
+	const {stdin} = render(<SelectInput items={items} onChange={onChange}/>);
+
+	stdin.write(ARROW_DOWN);
+	t.true(onChange.calledOnce);
+	t.true(onChange.calledWith(items[1]));
+});
