@@ -49,7 +49,7 @@ class SelectInput extends PureComponent {
 					const isSelected = index === selectedIndex;
 
 					return (
-						<Box key={item.value}>
+						<Box key={item.key || item.value}>
 							{React.createElement(indicatorComponent, {isSelected})}
 							{React.createElement(itemComponent, {...item, isSelected})}
 						</Box>
