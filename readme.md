@@ -58,6 +58,13 @@ Default: `true`
 
 Listen to user's input. Useful in case there are multiple input components at the same time and input must be "routed" to a specific component.
 
+### initialIndex
+
+Type: `number`
+Default: `0`
+
+Index of initially-selected item in `items` array.
+
 ### onSelect
 
 Type: `function`
