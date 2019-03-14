@@ -534,12 +534,18 @@ test('list - onChange', t => {
 	}, {
 		label: 'Second',
 		value: 'second'
+	}, {
+		label: 'Third',
+		value: 'third'
 	}];
 
 	const onChange = spy();
-	const {stdin} = render(<SelectInput items={items} onChange={onChange}/>);
+	const {stdin} = render(<SelectInput items={items} limit={2} onChange={onChange}/>);
 
 	stdin.write(ARROW_DOWN);
-	t.true(onChange.calledOnce);
-	t.true(onChange.calledWith(items[1]));
+	stdin.write(ARROW_DOWN);
+
+	t.true(onChange.calledTwice);
+	t.deepEqual(onChange.firstCall.args[0], items[1]);
+	t.deepEqual(onChange.secondCall.args[0], items[2]);
 });
