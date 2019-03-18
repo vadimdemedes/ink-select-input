@@ -17,10 +17,12 @@
 		"pretest": "npm run build",
 		"test": "xo && ava",
 		"build": "babel src --out-dir=build",
-		"prepare": "npm run build"
+		"prepare": "npm run build",
+		"typecheck": "tsc --noEmit --jsx react index.test-d.tsx"
 	},
 	"files": [
-		"build"
+		"build",
+		"index.d.ts"
 	],
 	"keywords": [
 		"ink",
@@ -37,6 +39,7 @@
 		"@babel/core": "^7.3.3",
 		"@babel/plugin-proposal-class-properties": "^7.3.3",
 		"@babel/preset-react": "^7.0.0",
+		"@types/react": "^16.8.8",
 		"ava": "*",
 		"babel-eslint": "^10.0.1",
 		"eslint-config-xo-react": "^0.16.0",
@@ -45,6 +48,7 @@
 		"ink-testing-library": "^1.0.0",
 		"react": "^16.8.2",
 		"sinon": "^7.2.7",
+		"typescript": "^3.3.3333",
 		"xo": "*"
 	},
 	"babel": {
