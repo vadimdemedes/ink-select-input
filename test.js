@@ -527,7 +527,7 @@ test('list - rotate when there are more items than limit', t => {
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
-test('list - onChange', t => {
+test('list - onHighlight', t => {
 	const items = [{
 		label: 'First',
 		value: 'first'
@@ -539,13 +539,13 @@ test('list - onChange', t => {
 		value: 'third'
 	}];
 
-	const onChange = spy();
-	const {stdin} = render(<SelectInput items={items} limit={2} onChange={onChange}/>);
+	const onHighlight = spy();
+	const {stdin} = render(<SelectInput items={items} limit={2} onHighlight={onHighlight}/>);
 
 	stdin.write(ARROW_DOWN);
 	stdin.write(ARROW_DOWN);
 
-	t.true(onChange.calledTwice);
-	t.deepEqual(onChange.firstCall.args[0], items[1]);
-	t.deepEqual(onChange.secondCall.args[0], items[2]);
+	t.true(onHighlight.calledTwice);
+	t.deepEqual(onHighlight.firstCall.args[0], items[1]);
+	t.deepEqual(onHighlight.secondCall.args[0], items[2]);
 });

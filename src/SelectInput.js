@@ -19,7 +19,7 @@ class SelectInput extends PureComponent {
 		itemComponent: PropTypes.func,
 		limit: PropTypes.number,
 		onSelect: PropTypes.func,
-		onChange: PropTypes.func
+		onHighlight: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -30,7 +30,7 @@ class SelectInput extends PureComponent {
 		itemComponent: Item,
 		limit: null,
 		onSelect() {},
-		onChange() {}
+		onHighlight() {}
 	}
 
 	state = {
@@ -84,12 +84,12 @@ class SelectInput extends PureComponent {
 		}
 
 		if (prevState.selectedIndex !== this.state.selectedIndex) {
-			const {onChange, items} = this.props;
+			const {onHighlight, items} = this.props;
 			const {rotateIndex, selectedIndex} = this.state;
 			const hasLimit = this.hasLimit();
 			const limit = this.getLimit();
 			const slicedItems = hasLimit ? arrRotate(items, rotateIndex).slice(0, limit) : items;
-			onChange(slicedItems[selectedIndex]);
+			onHighlight(slicedItems[selectedIndex]);
 		}
 	}
 
