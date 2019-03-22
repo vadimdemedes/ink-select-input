@@ -46,10 +46,8 @@ export type InkSelectInputProps = {
 	 */
 	limit?: number;
 }
-
+ 
 /**
  * Select input component for Ink
  */
-declare class InkSelectInput extends React.Component<InkSelectInputProps> {}
-
-export default InkSelectInput;
+export default class InkSelectInput extends React.Component<InkSelectInputProps> {}
