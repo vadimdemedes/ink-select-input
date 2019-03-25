@@ -1,9 +1,22 @@
 import * as React from 'react';
 
+/**
+ * Props for custom indicator component.
+ */
+export type IndicatorProps = { isSelected?: boolean };
+
+/**
+ * Props for custom item component.
+ */
+export type ItemProps = { isSelected?: boolean; label: string };
+
+/**
+ * Select item definition.
+ */
 export type Item = {
-	label:string;
-	value:React.Key;
-	key?:React.Key;
+	label: string;
+	value: React.Key;
+	key?: React.Key;
 };
 
 export type InkSelectInputProps = {
@@ -29,25 +42,27 @@ export type InkSelectInputProps = {
 	 * Function to call when user selects an item.
 	 * Item object is passed to that function as an argument.
 	 */
-	onSelect?: (item:Item) => void;
+	onSelect?: (item: Item) => void;
 
 	/**
 	 * Custom component to override the default indicator component.
 	 */
-	indicatorComponent?: React.ComponentType;
+	indicatorComponent?: React.ComponentType<IndicatorProps>;
 
 	/**
 	 * Custom component to override the default item component.
 	 */
-	itemComponent?: React.ComponentType;
+	itemComponent?: React.ComponentType<ItemProps>;
 
 	/**
 	 * Number of items to display.
 	 */
 	limit?: number;
-}
- 
+};
+
 /**
  * Select input component for Ink
  */
-export default class InkSelectInput extends React.Component<InkSelectInputProps> {}
+export default class InkSelectInput extends React.Component<
+	InkSelectInputProps
+> {}
