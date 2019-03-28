@@ -8,7 +8,10 @@ export type IndicatorProps = { isSelected?: boolean };
 /**
  * Props for custom item component.
  */
-export type ItemProps = { isSelected?: boolean; label: string };
+export type ItemProps = {
+	isSelected?: boolean;
+	label: string
+};
 
 /**
  * Select item definition.
@@ -63,6 +66,4 @@ export type InkSelectInputProps = {
 /**
  * Select input component for Ink
  */
-export default class InkSelectInput extends React.Component<
-	InkSelectInputProps
-> {}
+export default class InkSelectInput extends React.Component<InkSelectInputProps> {}
