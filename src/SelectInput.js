@@ -18,7 +18,8 @@ class SelectInput extends PureComponent {
 		indicatorComponent: PropTypes.func,
 		itemComponent: PropTypes.func,
 		limit: PropTypes.number,
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
+		onHighlight: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -28,7 +29,8 @@ class SelectInput extends PureComponent {
 		indicatorComponent: Indicator,
 		itemComponent: Item,
 		limit: null,
-		onSelect() {}
+		onSelect() {},
+		onHighlight() {}
 	}
 
 	state = {
@@ -83,7 +85,7 @@ class SelectInput extends PureComponent {
 	}
 
 	handleInput = data => {
-		const {items, focus, onSelect} = this.props;
+		const {items, focus, onSelect, onHighlight} = this.props;
 		const {rotateIndex, selectedIndex} = this.state;
 		const hasLimit = this.hasLimit();
 		const limit = this.getLimit();
@@ -98,21 +100,31 @@ class SelectInput extends PureComponent {
 			const lastIndex = (hasLimit ? limit : items.length) - 1;
 			const atFirstIndex = selectedIndex === 0;
 			const nextIndex = (hasLimit ? selectedIndex : lastIndex);
+			const nextRotateIndex = atFirstIndex ? rotateIndex + 1 : rotateIndex;
+			const nextSelectedIndex = atFirstIndex ? nextIndex : selectedIndex - 1;
 
 			this.setState({
-				rotateIndex: atFirstIndex ? rotateIndex + 1 : rotateIndex,
-				selectedIndex: atFirstIndex ? nextIndex : selectedIndex - 1
+				rotateIndex: nextRotateIndex,
+				selectedIndex: nextSelectedIndex
 			});
+
+			const slicedItems = hasLimit ? arrRotate(items, nextRotateIndex).slice(0, limit) : items;
+			onHighlight(slicedItems[nextSelectedIndex]);
 		}
 
 		if (s === ARROW_DOWN || s === 'j') {
 			const atLastIndex = selectedIndex === (hasLimit ? limit : items.length) - 1;
 			const nextIndex = (hasLimit ? selectedIndex : 0);
+			const nextRotateIndex = atLastIndex ? rotateIndex - 1 : rotateIndex;
+			const nextSelectedIndex = atLastIndex ? nextIndex : selectedIndex + 1;
 
 			this.setState({
-				rotateIndex: atLastIndex ? rotateIndex - 1 : rotateIndex,
-				selectedIndex: atLastIndex ? nextIndex : selectedIndex + 1
+				rotateIndex: nextRotateIndex,
+				selectedIndex: nextSelectedIndex
 			});
+
+			const slicedItems = hasLimit ? arrRotate(items, nextRotateIndex).slice(0, limit) : items;
+			onHighlight(slicedItems[nextSelectedIndex]);
 		}
 
 		if (s === ENTER) {

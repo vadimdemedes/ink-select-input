@@ -72,6 +72,12 @@ Type: `function`
 
 Function to call when user selects an item. Item object is passed to that function as an argument.
 
+### onHighlight
+
+Type: `function`
+
+Function to call when user highlights an item. Item object is passed to that function as an argument.
+
 ### indicatorComponent
 
 Type: `Component`
