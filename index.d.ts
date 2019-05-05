@@ -10,7 +10,7 @@ export type IndicatorProps = { isSelected?: boolean };
  */
 export type ItemProps = {
 	isSelected?: boolean;
-	label: string
+	label: string;
 };
 
 /**
@@ -46,6 +46,12 @@ export type InkSelectInputProps = {
 	 * Item object is passed to that function as an argument.
 	 */
 	onSelect?: (item: Item) => void;
+
+	/**
+	 * Function to call when user highlights an item.
+	 * Item object is passed to that function as an argument.
+	 */
+	onHighlight?: (item: Item) => void;
 
 	/**
 	 * Custom component to override the default indicator component.

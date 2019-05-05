@@ -17,7 +17,8 @@ const selectWithItems = () => <InkSelect items={items} />;
 const selectWithKeyedItems = () => <InkSelect items={keyedItems} />;
 
 const onSelect = (item: Item) => console.log(item);
-const withHandler = () => <InkSelect onSelect={onSelect} />;
+const onHighlight = (item: Item) => console.log(item);
+const withHandler = () => <InkSelect onSelect={onSelect} onHighlight={onHighlight} />;
 
 const CustomIndikator: React.FC<IndicatorProps> = ({isSelected}) => (
 	<div>{isSelected ? '✓' : ''}</div>
