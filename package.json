@@ -34,6 +34,9 @@
 		"lodash.isequal": "^4.5.0",
 		"prop-types": "^15.5.10"
 	},
+	"peerDependencies": {
+		"ink": "^2.0.0"
+	},
 	"devDependencies": {
 		"@babel/cli": "^7.2.3",
 		"@babel/core": "^7.3.3",
