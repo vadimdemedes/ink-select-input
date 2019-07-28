@@ -18,6 +18,8 @@ class SelectInput extends PureComponent {
 		indicatorComponent: PropTypes.func,
 		itemComponent: PropTypes.func,
 		limit: PropTypes.number,
+		stdin: PropTypes.object.isRequired,
+		setRawMode: PropTypes.func.isRequired,
 		onSelect: PropTypes.func,
 		onHighlight: PropTypes.func
 	}
@@ -62,14 +64,14 @@ class SelectInput extends PureComponent {
 	}
 
 	componentDidMount() {
-		const {stdin, setRawMode} = this.props; // eslint-disable-line react/prop-types
+		const {stdin, setRawMode} = this.props;
 
 		setRawMode(true);
 		stdin.on('data', this.handleInput);
 	}
 
 	componentWillUnmount() {
-		const {stdin, setRawMode} = this.props; // eslint-disable-line react/prop-types
+		const {stdin, setRawMode} = this.props;
 
 		stdin.removeListener('data', this.handleInput);
 		setRawMode(false);
