@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Box, Color} from 'ink';
+import {Box, Text} from 'ink';
 import figures from 'figures';
 
 const Indicator = ({isSelected}) => (
 	<Box marginRight={1}>
 		{isSelected ? (
-			<Color blue>
+			<Text color="blue">
 				{figures.pointer}
-			</Color>
+			</Text>
 		) : ' '}
 	</Box>
 );

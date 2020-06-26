@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 import arrRotate from 'arr-rotate';
-import {Box, StdinContext} from 'ink';
+import {Box, useStdin} from 'ink';
 import Indicator from './Indicator';
 import Item from './Item';
 
@@ -152,16 +152,13 @@ class SelectInput extends PureComponent {
 	}
 }
 
-export default class SelectInputWithStdin extends PureComponent {
-	render() {
-		return (
-			<StdinContext.Consumer>
-				{({stdin, setRawMode}) => (
-					<SelectInput {...this.props} stdin={stdin} setRawMode={setRawMode}/>
-				)}
-			</StdinContext.Consumer>
-		);
-	}
+const SelectInputWithStdin = props => {
+	const {stdin, setRawMode} = useStdin()
+
+	return (
+		<SelectInput {...props} stdin={stdin} setRawMode={setRawMode}/>
+	);
 }
 
+export default SelectInputWithStdin;
 export {Indicator, Item};

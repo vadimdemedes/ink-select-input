@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Color} from 'ink';
+import {Box, Text} from 'ink';
 import {render} from 'ink-testing-library';
 import {spy} from 'sinon';
 import figures from 'figures';
@@ -22,7 +22,7 @@ test('indicator', t => {
 
 test('indicator - selected', t => {
 	const actual = render(<Indicator isSelected/>);
-	const expected = render(<Color blue>{figures.pointer}</Color>);
+	const expected = render(<Text color="blue">{figures.pointer}</Text>);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
@@ -35,7 +35,7 @@ test('item', t => {
 
 test('item - selected', t => {
 	const actual = render(<Item isSelected label="Test"/>);
-	const expected = render(<Color blue>Test</Color>);
+	const expected = render(<Text color="blue">Test</Text>);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
 });

@@ -2,6 +2,7 @@
 
 > Select input component for [Ink](https://github.com/vadimdemedes/ink)
 
+Looking for a version compatible with Ink 2.x? Check out [previous release](https://github.com/vadimdemedes/ink-text-input/tree/v3.1.2).
 
 ## Install
 

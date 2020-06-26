@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Color} from 'ink';
+import {Text} from 'ink';
 
 const Item = ({isSelected, label}) => (
-	<Color blue={isSelected}>
+	<Text color={isSelected ? 'blue' : 'white'}>
 		{label}
-	</Color>
+	</Text>
 );
 
 Item.propTypes = {

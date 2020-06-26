@@ -7,7 +7,7 @@
 	"author": {
 		"name": "Vadim Demedes",
 		"email": "vdemedes@gmail.com",
-		"url": "github.com/vadimdemedes"
+		"url": "https://github.com/vadimdemedes"
 	},
 	"main": "build/index.js",
 	"engines": {
@@ -43,16 +43,17 @@
 		"@babel/plugin-proposal-class-properties": "^7.3.3",
 		"@babel/preset-react": "^7.0.0",
 		"@types/react": "^16.8.8",
-		"ava": "*",
+		"ava": "^3.9.0",
 		"babel-eslint": "^10.0.1",
-		"eslint-config-xo-react": "^0.16.0",
-		"eslint-plugin-react": "^7.1.0",
-		"ink": "^2.0.0",
-		"ink-testing-library": "^1.0.0",
+		"eslint-config-xo-react": "^0.23.0",
+		"eslint-plugin-react": "^7.20.0",
+		"eslint-plugin-react-hooks": "^4.0.4",
+		"ink": "^3.0.0-3",
+		"ink-testing-library": "^2.0.0",
 		"react": "^16.8.2",
 		"sinon": "^7.2.7",
-		"typescript": "^3.3.3333",
-		"xo": "*"
+		"typescript": "^3.9.5",
+		"xo": "^0.32.0"
 	},
 	"babel": {
 		"plugins": [
