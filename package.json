@@ -35,7 +35,8 @@
 		"prop-types": "^15.5.10"
 	},
 	"peerDependencies": {
-		"ink": "^2.0.0"
+		"ink": "^2.0.0",
+		"react": "^16.8.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.2.3",
