@@ -35,9 +35,11 @@
 		"prop-types": "^15.5.10"
 	},
 	"peerDependencies": {
-		"ink": "^2.0.0"
+		"ink": "^3.0.0-3"
 	},
 	"devDependencies": {
+		"@ava/babel": "^1.0.1",
+		"@ava/typescript": "^1.1.1",
 		"@babel/cli": "^7.2.3",
 		"@babel/core": "^7.3.3",
 		"@babel/plugin-proposal-class-properties": "^7.3.3",
@@ -46,6 +48,7 @@
 		"ava": "^3.9.0",
 		"babel-eslint": "^10.0.1",
 		"eslint-config-xo-react": "^0.23.0",
+		"eslint-config-xo-typescript": "^0.31.0",
 		"eslint-plugin-react": "^7.20.0",
 		"eslint-plugin-react-hooks": "^4.0.4",
 		"ink": "^3.0.0-3",
@@ -55,19 +58,28 @@
 		"typescript": "^3.9.5",
 		"xo": "^0.32.0"
 	},
+	"ava": {
+		"babel": true,
+		"typescript": {
+			"rewritePaths": {
+				"src/": "build/"
+			}
+		}
+	},
 	"babel": {
 		"plugins": [
 			"@babel/plugin-proposal-class-properties"
 		],
 		"presets": [
-			"@ava/stage-4",
+			"@ava/babel/stage-4",
 			"@babel/preset-react"
 		]
 	},
 	"xo": {
 		"parser": "babel-eslint",
 		"extends": [
-			"xo-react"
+			"xo-react",
+			"xo-typescript"
 		],
 		"rules": {
 			"react/no-unused-prop-types": 1,
