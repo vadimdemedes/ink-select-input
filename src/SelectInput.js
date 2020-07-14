@@ -41,6 +41,7 @@ class SelectInput extends PureComponent {
 	}
 
 	render() {
+		const {stdin, setRawMode} = useStdin()
 		const {items, indicatorComponent, itemComponent} = this.props;
 		const {rotateIndex, selectedIndex} = this.state;
 		const limit = this.getLimit();
@@ -152,13 +153,5 @@ class SelectInput extends PureComponent {
 	}
 }
 
-const SelectInputWithStdin = props => {
-	const {stdin, setRawMode} = useStdin()
-
-	return (
-		<SelectInput {...props} stdin={stdin} setRawMode={setRawMode}/>
-	);
-}
-
-export default SelectInputWithStdin;
+export default SelectInput;
 export {Indicator, Item};
