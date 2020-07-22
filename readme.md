@@ -1,4 +1,4 @@
-# ink-select-input [![Build Status](https://travis-ci.org/vadimdemedes/ink-select-input.svg?branch=master)](https://travis-ci.org/vadimdemedes/ink-select-input)
+# ink-select-input [![test](https://github.com/vadimdemedes/ink-select-input/workflows/test/badge.svg)](https://github.com/vadimdemedes/ink-select-input/actions)
 
 > Select input component for [Ink](https://github.com/vadimdemedes/ink)
 
