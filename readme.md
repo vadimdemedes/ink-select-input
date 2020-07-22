@@ -10,7 +10,6 @@ Looking for a version compatible with Ink 2.x? Check out [previous release](http
 $ npm install ink-select-input
 ```
 
-
 ## Usage
 
 ```jsx
@@ -23,25 +22,28 @@ const Demo = () => {
 		// `item` = { label: 'First', value: 'first' }
 	};
 
-	const items = [{
-		label: 'First',
-		value: 'first'
-	}, {
-		label: 'Second',
-		value: 'second'
-	}, {
-		label: 'Third',
-		value: 'third'
-	}];
+	const items = [
+		{
+			label: 'First',
+			value: 'first'
+		},
+		{
+			label: 'Second',
+			value: 'second'
+		},
+		{
+			label: 'Third',
+			value: 'third'
+		}
+	];
 
-	return <SelectInput items={items} onSelect={handleSelect}/>
+	return <SelectInput items={items} onSelect={handleSelect} />;
 };
 
-render(<Demo/>);
+render(<Demo />);
 ```
 
 <img src="media/demo.gif" width="508">
-
 
 ## Props
 
@@ -53,7 +55,7 @@ Default: `[]`
 Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 If no `key` prop is provided, `value` will be used as the item key.
 
-### focus
+### isFocused
 
 Type: `boolean`<br>
 Default: `true`
@@ -67,17 +69,11 @@ Default: `0`
 
 Index of initially-selected item in `items` array.
 
-### onSelect
+### limit
 
-Type: `function`
+Type: `number`
 
-Function to call when user selects an item. Item object is passed to that function as an argument.
-
-### onHighlight
-
-Type: `function`
-
-Function to call when user highlights an item. Item object is passed to that function as an argument.
+Number of items to display.
 
 ### indicatorComponent
 
@@ -91,12 +87,17 @@ Type: `Component`
 
 Custom component to override the default item component.
 
-### limit
+### onSelect
 
-Type: `number`
+Type: `function`
 
-Number of items to display.
+Function to call when user selects an item. Item object is passed to that function as an argument.
 
+### onHighlight
+
+Type: `function`
+
+Function to call when user highlights an item. Item object is passed to that function as an argument.
 
 ## License
 
