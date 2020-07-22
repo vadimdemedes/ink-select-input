@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const Item: FC<Props> = ({isSelected = false, label}) => (
-	<Text color={isSelected ? 'blue' : 'white'}>{label}</Text>
+	<Text color={isSelected ? 'blue' : undefined}>{label}</Text>
 );
 
 export default Item;
