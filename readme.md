@@ -98,7 +98,3 @@ Function to call when user selects an item. Item object is passed to that functi
 Type: `function`
 
 Function to call when user highlights an item. Item object is passed to that function as an argument.
-
-## License
-
-MIT © [Vadim Demedes](http://github.com/vadimdemedes)
