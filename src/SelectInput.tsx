@@ -29,6 +29,13 @@ interface Props {
 	 * @default 0
 	 */
 	initialIndex?: number;
+	
+	/**
+	 * Optional controlled index of item in `items` array.
+	 *
+	 * @default 0
+	 */
+	index?: number;
 
 	/**
 	 * Number of items to display.
@@ -66,6 +73,7 @@ const SelectInput: FC<Props> = ({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
+	index = 0,
 	indicatorComponent = Indicator,
 	itemComponent = Item,
 	limit: customLimit,
@@ -73,7 +81,7 @@ const SelectInput: FC<Props> = ({
 	onHighlight
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
-	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+	const [selectedIndex, setSelectedIndex] = useState(initialIndex || index);
 	const hasLimit =
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
@@ -88,6 +96,11 @@ const SelectInput: FC<Props> = ({
 
 		previousItems.current = items;
 	}, [items]);
+	
+	useEffect(() => {
+		setRotateIndex(index);
+		setSelectedIndex(index);
+	}, [index]);
 
 	useInput(
 		useCallback(
