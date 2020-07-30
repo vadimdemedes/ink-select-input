@@ -29,8 +29,7 @@
 	"dependencies": {
 		"arr-rotate": "^1.0.0",
 		"figures": "^3.2.0",
-		"lodash": "^4.17.19",
-		"lodash.isequal": "^4.5.0"
+		"lodash": "^4.17.19"
 	},
 	"peerDependencies": {
 		"ink": "^3.0.0-7",
