@@ -98,7 +98,7 @@ const SelectInput: FC<Props> = ({
 	}, [items]);
 	
 	useEffect(() => {
-		if (index) {
+		if (typeof index === 'number') {
 			setRotateIndex(index);
 			setSelectedIndex(index);
 		}
