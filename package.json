@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input",
-	"version": "3.1.2",
+	"version": "4.0.0",
 	"description": "Select input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-select-input",
@@ -9,20 +9,18 @@
 		"email": "vdemedes@gmail.com",
 		"url": "github.com/vadimdemedes"
 	},
-	"main": "build/index.js",
+	"main": "build",
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"scripts": {
-		"pretest": "npm run build",
-		"test": "xo && ava && npm run typecheck",
-		"build": "babel src --out-dir=build",
-		"prepare": "npm run build",
-		"typecheck": "tsc --noEmit --jsx react index.test-d.tsx"
+		"pretest": "tsc",
+		"test": "xo && ava",
+		"build": "tsc",
+		"prepare": "tsc"
 	},
 	"files": [
-		"build",
-		"index.d.ts"
+		"build"
 	],
 	"keywords": [
 		"ink",
@@ -30,49 +28,57 @@
 	],
 	"dependencies": {
 		"arr-rotate": "^1.0.0",
-		"figures": "^2.0.0",
-		"lodash.isequal": "^4.5.0",
-		"prop-types": "^15.5.10"
+		"figures": "^3.2.0",
+		"lodash": "^4.17.19",
+		"lodash.isequal": "^4.5.0"
 	},
 	"peerDependencies": {
-		"ink": "^2.0.0",
+		"ink": "^3.0.0-7",
 		"react": "^16.8.2"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.2.3",
+		"@ava/babel": "^1.0.1",
 		"@babel/core": "^7.3.3",
-		"@babel/plugin-proposal-class-properties": "^7.3.3",
 		"@babel/preset-react": "^7.0.0",
-		"@types/react": "^16.8.8",
-		"ava": "*",
-		"babel-eslint": "^10.0.1",
-		"eslint-config-xo-react": "^0.16.0",
-		"eslint-plugin-react": "^7.1.0",
-		"ink": "^2.0.0",
-		"ink-testing-library": "^1.0.0",
+		"@sindresorhus/tsconfig": "^0.7.0",
+		"@types/lodash": "^4.14.158",
+		"@types/react": "^16.9.43",
+		"@vdemedes/prettier-config": "^1.0.1",
+		"ava": "^3.9.0",
+		"delay": "^4.4.0",
+		"eslint-config-xo-react": "^0.23.0",
+		"eslint-config-xo-typescript": "^0.31.0",
+		"eslint-plugin-react": "^7.20.0",
+		"eslint-plugin-react-hooks": "^4.0.4",
+		"ink": "^3.0.0-3",
+		"ink-testing-library": "^2.0.0",
+		"prettier": "^2.0.5",
 		"react": "^16.8.2",
 		"sinon": "^7.2.7",
-		"typescript": "^3.3.3333",
-		"xo": "*"
+		"typescript": "^3.9.7",
+		"xo": "^0.32.0"
+	},
+	"ava": {
+		"babel": true
 	},
 	"babel": {
-		"plugins": [
-			"@babel/plugin-proposal-class-properties"
-		],
 		"presets": [
-			"@ava/stage-4",
+			"@ava/babel/stage-4",
 			"@babel/preset-react"
 		]
 	},
 	"xo": {
-		"parser": "babel-eslint",
 		"extends": [
-			"xo-react"
+			"xo-react",
+			"xo-typescript"
 		],
+		"prettier": true,
 		"rules": {
-			"react/no-unused-prop-types": 1,
-			"unicorn/no-hex-escape": 0,
-			"unicorn/filename-case": 0
+			"react/no-unused-prop-types": "warn",
+			"react/prop-types": "off",
+			"unicorn/no-hex-escape": "off",
+			"unicorn/filename-case": "off"
 		}
-	}
+	},
+	"prettier": "@vdemedes/prettier-config"
 }
