@@ -58,9 +58,9 @@ interface Props {
 	onSelect?: (item: Item) => void;
 
 	/**
-	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
+	 * Function to call when user highlights an item. Item object is passed to that function as an argument, additionaly its index.
 	 */
-	onHighlight?: (item: Item) => void;
+	onHighlight?: (item: Item, index: number) => void;
 }
 
 export interface Item {
@@ -122,7 +122,7 @@ const SelectInput: FC<Props> = ({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 
@@ -141,7 +141,7 @@ const SelectInput: FC<Props> = ({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 
