@@ -98,8 +98,10 @@ const SelectInput: FC<Props> = ({
 	}, [items]);
 	
 	useEffect(() => {
-		setRotateIndex(index);
-		setSelectedIndex(index);
+		if (index) {
+			setRotateIndex(index);
+			setSelectedIndex(index);
+		}
 	}, [index]);
 
 	useInput(
