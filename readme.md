@@ -9,7 +9,9 @@ This is a slightly changed version of the original ink-select-input that returns
 	const SelectInput = require('ink-select-input').default
 ```
 
+
 Looking for a version compatible with Ink 2.x? Check out [this release](https://github.com/vadimdemedes/ink-text-input/tree/v3.1.2).
+
 
 ## Install
 
