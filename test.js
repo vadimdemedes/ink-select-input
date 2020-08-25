@@ -24,7 +24,7 @@ test('indicator', t => {
 
 test('indicator - selected', t => {
 	const actual = render(<Indicator isSelected />);
-	const expected = render(<Text color="blue">{figures.pointer}</Text>);
+	const expected = render(<Text color="red">{figures.pointer}</Text>);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
