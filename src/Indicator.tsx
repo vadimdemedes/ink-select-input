@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const Indicator: FC<Props> = ({isSelected = false}) => (
-	<Box marginRight={1}>
+	<Box marginRight={1} marginLeft={1}>
 		{isSelected ? <Text color="red">{figures.pointer}</Text> : <Text> </Text>}
 	</Box>
 );
