@@ -1,13 +1,15 @@
-# ink-select-input [![test](https://github.com/vadimdemedes/ink-select-input/workflows/test/badge.svg)](https://github.com/vadimdemedes/ink-select-input/actions)
+# ink-select-input-horizontal [![test](https://github.com/vadimdemedes/ink-select-input/workflows/test/badge.svg)](https://github.com/vadimdemedes/ink-select-input/actions)
 
 > Select input component for [Ink](https://github.com/vadimdemedes/ink)
+
+This is a slightly changed version of the original ink-select-input that returns the selectors horizontally rather than vertically.
 
 Looking for a version compatible with Ink 2.x? Check out [this release](https://github.com/vadimdemedes/ink-text-input/tree/v3.1.2).
 
 ## Install
 
 ```
-$ npm install ink-select-input
+$ npm install ink-select-input-horizontal
 ```
 
 ## Usage
@@ -15,7 +17,7 @@ $ npm install ink-select-input
 ```jsx
 import React from 'react';
 import {render} from 'ink';
-import SelectInput from 'ink-select-input';
+import SelectInput from 'ink-select-input-horizontal';
 
 const Demo = () => {
 	const handleSelect = item => {
@@ -43,7 +45,7 @@ const Demo = () => {
 render(<Demo />);
 ```
 
-<img src="media/demo.gif" width="508">
+<img src="media/pic.png" width="508">
 
 ## Props
 

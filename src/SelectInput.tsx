@@ -92,7 +92,7 @@ const SelectInput: FC<Props> = ({
 	useInput(
 		useCallback(
 			(input, key) => {
-				if (input === 'k' || key.upArrow) {
+				if (input === 'a' || key.leftArrow) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -113,7 +113,7 @@ const SelectInput: FC<Props> = ({
 					}
 				}
 
-				if (input === 'j' || key.downArrow) {
+				if (input === 'd' || key.rightArrow) {
 					const atLastIndex =
 						selectedIndex === (hasLimit ? limit : items.length) - 1;
 					const nextIndex = hasLimit ? selectedIndex : 0;
@@ -160,7 +160,7 @@ const SelectInput: FC<Props> = ({
 		: items;
 
 	return (
-		<Box flexDirection="column">
+		<Box flexDirection="row">
 			{slicedItems.map((item, index) => {
 				const isSelected = index === selectedIndex;
 

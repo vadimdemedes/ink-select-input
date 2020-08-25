@@ -1,13 +1,13 @@
 {
-	"name": "ink-select-input",
+	"name": "ink-select-input-horizontal",
 	"version": "4.0.0",
-	"description": "Select input component for Ink",
+	"description": "Select input component for Ink, horizontally! A slight cariation of Vadim Demedes' ink-select-input",
 	"license": "MIT",
-	"repository": "vadimdemedes/ink-select-input",
+	"repository": "H3RSKO/ink-select-input",
 	"author": {
 		"name": "Vadim Demedes",
 		"email": "vdemedes@gmail.com",
-		"url": "github.com/vadimdemedes"
+		"url": "github.com/H3RSKO"
 	},
 	"main": "build",
 	"engines": {
