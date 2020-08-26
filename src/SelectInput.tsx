@@ -113,7 +113,7 @@ const SelectInput: FC<Props> = ({
 					}
 				}
 
-				if (input === 'd' || key.rightArrow) {
+				if (key.tab || input === 'd' || key.rightArrow) {
 					const atLastIndex =
 						selectedIndex === (hasLimit ? limit : items.length) - 1;
 					const nextIndex = hasLimit ? selectedIndex : 0;
