@@ -92,7 +92,7 @@ const SelectInput: FC<Props> = ({
 	useInput(
 		useCallback(
 			(input, key) => {
-				if (key.leftArrow ) {
+				if (input === '`' || key.leftArrow ) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -130,7 +130,6 @@ const SelectInput: FC<Props> = ({
 					if (typeof onHighlight === 'function') {
 						onHighlight(slicedItems[nextSelectedIndex]);
 					}
-					input = '`'
 				}
 
 				if (key.return) {
