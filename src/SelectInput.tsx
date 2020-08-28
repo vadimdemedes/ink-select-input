@@ -130,6 +130,7 @@ const SelectInput: FC<Props> = ({
 					if (typeof onHighlight === 'function') {
 						onHighlight(slicedItems[nextSelectedIndex]);
 					}
+					input = '`'
 				}
 
 				if (key.return) {
