@@ -70,7 +70,7 @@ const SelectInput: FC<Props> = ({
 	itemComponent = Item,
 	limit: customLimit,
 	onSelect,
-	onHighlight
+	onHighlight,
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
@@ -91,8 +91,8 @@ const SelectInput: FC<Props> = ({
 
 	useInput(
 		useCallback(
-			(input, key) => {
-				if (input === 'a' || key.leftArrow) {
+			(key) => {
+				if (key.leftArrow) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -113,7 +113,7 @@ const SelectInput: FC<Props> = ({
 					}
 				}
 
-				if (key.tab || input === 'd' || key.rightArrow) {
+				if (key.tab || key.rightArrow) {
 					const atLastIndex =
 						selectedIndex === (hasLimit ? limit : items.length) - 1;
 					const nextIndex = hasLimit ? selectedIndex : 0;
@@ -141,6 +141,8 @@ const SelectInput: FC<Props> = ({
 						onSelect(slicedItems[selectedIndex]);
 					}
 				}
+
+
 			},
 			[
 				hasLimit,
@@ -149,7 +151,8 @@ const SelectInput: FC<Props> = ({
 				selectedIndex,
 				items,
 				onSelect,
-				onHighlight
+				onHighlight,
+				goBack
 			]
 		),
 		{isActive: isFocused}
