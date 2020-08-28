@@ -91,8 +91,8 @@ const SelectInput: FC<Props> = ({
 
 	useInput(
 		useCallback(
-			(key) => {
-				if (key.leftArrow) {
+			(input, key) => {
+				if (key.leftArrow ) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -151,8 +151,7 @@ const SelectInput: FC<Props> = ({
 				selectedIndex,
 				items,
 				onSelect,
-				onHighlight,
-				goBack
+				onHighlight
 			]
 		),
 		{isActive: isFocused}
