@@ -165,7 +165,10 @@ const SelectInput: FC<Props> = ({
 				selectedIndex,
 				items,
 				onSelect,
-				onHighlight
+				onHighlight,
+				defaultColor,
+				accentColor,
+				displayDirection,
 			]
 		),
 		{isActive: isFocused}
