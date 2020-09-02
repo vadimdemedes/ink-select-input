@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input-horizontal",
-	"version": "4.3.2",
+	"version": "4.4.0",
 	"description": "Select input component for Ink, horizontally! A slight variation of Vadim Demedes' ink-select-input",
 	"license": "MIT",
 	"repository": "H3RSKO/ink-select-input",
