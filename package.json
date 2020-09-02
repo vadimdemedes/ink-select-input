@@ -10,6 +10,7 @@
 		"url": "github.com/H3RSKO"
 	},
 	"main": "build",
+	"typings": "build",
 	"engines": {
 		"node": ">=10"
 	},
