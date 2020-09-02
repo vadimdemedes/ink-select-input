@@ -4,5 +4,6 @@
 		"outDir": "build",
 		"target": "es2018",
 		"lib": ["es2018"]
-	}
+	},
+	"allowJs": true
 }
