@@ -8,8 +8,25 @@ import Indicator from './Indicator';
 import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
-import type {LiteralUnion} from 'type-fest';
-import ForegroundColor from 'chalk';
+
+declare type colors = 'black'
+	| 'red'
+	| 'green'
+	| 'yellow'
+	| 'blue'
+	| 'magenta'
+	| 'cyan'
+	| 'white'
+	| 'gray'
+	| 'grey'
+	| 'blackBright'
+	| 'redBright'
+	| 'greenBright'
+	| 'yellowBright'
+	| 'blueBright'
+	| 'magentaBright'
+	| 'cyanBright'
+	| 'whiteBright';
 
 interface Props {
 	/**
@@ -57,10 +74,10 @@ interface Props {
 	 */
 	onHighlight: (item: Item) => void;
 
-	defaultColor?: LiteralUnion<typeof ForegroundColor, any>;
+	defaultColor?: colors;
 	// any color i.e: 'red', 'green' etc
 
-	accentColor?: LiteralUnion<typeof ForegroundColor, any>;
+	accentColor?: colors;
 	// any color i.e: 'red', 'green' etc
 
 	displayDirection?: 'column' | 'row';
@@ -82,8 +99,8 @@ const SelectInput: FC<Props> = ({
 	limit: customLimit,
 	onSelect,
 	onHighlight,
-	defaultColor,
-	accentColor,
+	defaultColor = 'red',
+	accentColor = 'red',
 	displayDirection = 'row'
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);

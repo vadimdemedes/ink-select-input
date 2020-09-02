@@ -1,18 +1,35 @@
 import * as React from 'react';
 import type {FC} from 'react';
 import {Text} from 'ink';
-import type {LiteralUnion} from 'type-fest';
-import ForegroundColor from 'chalk';
+
+declare type colors = 'black'
+	| 'red'
+	| 'green'
+	| 'yellow'
+	| 'blue'
+	| 'magenta'
+	| 'cyan'
+	| 'white'
+	| 'gray'
+	| 'grey'
+	| 'blackBright'
+	| 'redBright'
+	| 'greenBright'
+	| 'yellowBright'
+	| 'blueBright'
+	| 'magentaBright'
+	| 'cyanBright'
+	| 'whiteBright';
 
 export interface Props {
 	isSelected?: boolean;
 	label: string;
-	defaultColor: LiteralUnion<typeof ForegroundColor, any>;
-	accentColor: LiteralUnion<typeof ForegroundColor, any>;
+	defaultColor: colors,
+	accentColor: colors,
 }
 // typeof chalk.ForegroundColor | typeof chalk.BackgroundColor | typeof chalk.Modifiers;
 const Item: FC<Props> = ({isSelected = false, label, defaultColor, accentColor}) => (
-	<Text color={isSelected ? accentColor : {defaultColor}}>{label}</Text>
+	<Text color={isSelected ? accentColor : defaultColor}>{label}</Text>
 );
 
 export default Item;
