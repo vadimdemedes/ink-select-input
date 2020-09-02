@@ -9,7 +9,7 @@ import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
 import type {LiteralUnion} from 'type-fest';
-import type ForegroundColor from 'chalk';
+import ForegroundColor from 'chalk';
 
 interface Props {
 	/**
@@ -82,8 +82,8 @@ const SelectInput: FC<Props> = ({
 	limit: customLimit,
 	onSelect,
 	onHighlight,
-	defaultColor = 'red',
-	accentColor = 'red',
+	defaultColor,
+	accentColor,
 	displayDirection = 'row'
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
