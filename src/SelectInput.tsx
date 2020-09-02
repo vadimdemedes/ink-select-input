@@ -8,6 +8,8 @@ import Indicator from './Indicator';
 import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
+import type {LiteralUnion} from 'type-fest';
+import type ForegroundColor from 'chalk';
 
 interface Props {
 	/**
@@ -53,7 +55,16 @@ interface Props {
 	/**
 	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
 	 */
-	onHighlight?: (item: Item) => void;
+	onHighlight: (item: Item) => void;
+
+	defaultColor?: LiteralUnion<typeof ForegroundColor, any>;
+	// any color i.e: 'red', 'green' etc
+
+	accentColor?: LiteralUnion<typeof ForegroundColor, any>;
+	// any color i.e: 'red', 'green' etc
+
+	displayDirection?: 'column' | 'row';
+	// 'row' or 'column'
 }
 
 export interface Item {
@@ -71,6 +82,9 @@ const SelectInput: FC<Props> = ({
 	limit: customLimit,
 	onSelect,
 	onHighlight,
+	defaultColor = 'red',
+	accentColor = 'red',
+	displayDirection = 'row'
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
@@ -162,14 +176,14 @@ const SelectInput: FC<Props> = ({
 		: items;
 
 	return (
-		<Box flexDirection="row">
+		<Box flexDirection={displayDirection}>
 			{slicedItems.map((item, index) => {
 				const isSelected = index === selectedIndex;
-
+				// const test = accentColor
 				return (
 					<Box key={item.key ?? item.value}>
-						{React.createElement(indicatorComponent, {isSelected})}
-						{React.createElement(itemComponent, {...item, isSelected})}
+						{React.createElement(indicatorComponent,{isSelected, accentColor})}
+						{React.createElement(itemComponent, {...item, isSelected, defaultColor, accentColor})}
 					</Box>
 				);
 			})}
