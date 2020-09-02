@@ -8,25 +8,8 @@ import Indicator from './Indicator';
 import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
+import Colors from './Colors';
 
-declare type colors = 'black'
-	| 'red'
-	| 'green'
-	| 'yellow'
-	| 'blue'
-	| 'magenta'
-	| 'cyan'
-	| 'white'
-	| 'gray'
-	| 'grey'
-	| 'blackBright'
-	| 'redBright'
-	| 'greenBright'
-	| 'yellowBright'
-	| 'blueBright'
-	| 'magentaBright'
-	| 'cyanBright'
-	| 'whiteBright';
 
 interface Props {
 	/**
@@ -74,10 +57,10 @@ interface Props {
 	 */
 	onHighlight: (item: Item) => void;
 
-	defaultColor?: colors;
+	defaultColor?: Colors;
 	// any color i.e: 'red', 'green' etc
 
-	accentColor?: colors;
+	accentColor?: Colors;
 	// any color i.e: 'red', 'green' etc
 
 	displayDirection?: 'column' | 'row';
@@ -99,9 +82,9 @@ const SelectInput: FC<Props> = ({
 	limit: customLimit,
 	onSelect,
 	onHighlight,
-	defaultColor = 'red',
-	accentColor = 'red',
-	displayDirection = 'row'
+	defaultColor,
+	accentColor,
+	displayDirection,
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
@@ -196,7 +179,7 @@ const SelectInput: FC<Props> = ({
 		<Box flexDirection={displayDirection}>
 			{slicedItems.map((item, index) => {
 				const isSelected = index === selectedIndex;
-				// const test = accentColor
+
 				return (
 					<Box key={item.key ?? item.value}>
 						{React.createElement(indicatorComponent,{isSelected, accentColor})}

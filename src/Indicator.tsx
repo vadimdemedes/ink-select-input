@@ -2,29 +2,12 @@ import * as React from 'react';
 import type {FC} from 'react';
 import {Box, Text} from 'ink';
 import * as figures from 'figures';
+import Colors from './Colors';
 
-declare type colors = 'black'
-	| 'red'
-	| 'green'
-	| 'yellow'
-	| 'blue'
-	| 'magenta'
-	| 'cyan'
-	| 'white'
-	| 'gray'
-	| 'grey'
-	| 'blackBright'
-	| 'redBright'
-	| 'greenBright'
-	| 'yellowBright'
-	| 'blueBright'
-	| 'magentaBright'
-	| 'cyanBright'
-	| 'whiteBright';
 
 export interface Props {
 	isSelected?: boolean;
-	accentColor?: colors;
+	accentColor?: Colors;
 }
 
 const Indicator: FC<Props> = ({isSelected = false, accentColor}) => (
