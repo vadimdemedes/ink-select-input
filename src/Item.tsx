@@ -6,8 +6,8 @@ import Colors from './Colors';
 export interface Props {
 	isSelected?: boolean;
 	label: string;
-	defaultColor: Colors,
-	accentColor: Colors,
+	defaultColor?: Colors,
+	accentColor?: Colors,
 }
 
 const Item: FC<Props> = ({isSelected = false, label, defaultColor, accentColor}) => (
