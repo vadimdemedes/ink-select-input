@@ -1,8 +1,8 @@
 # ink-select-input-horizontal [![test](https://github.com/vadimdemedes/ink-select-input/workflows/test/badge.svg)](https://github.com/vadimdemedes/ink-select-input/actions)
 
-> Horizontal select input component for [Ink](https://github.com/vadimdemedes/ink)
+> Horizontal or Vertical select input component for [Ink](https://github.com/vadimdemedes/ink)
 
-This is a slightly changed version of the original ink-select-input that returns the selectors horizontally rather than vertically.
+This is a modified version of the original ink-select-input that returns the selectors horizontally or vertically and allows color customization.
 
 *note* when requiring this package use:
 ```
