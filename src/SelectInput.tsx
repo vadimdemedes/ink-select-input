@@ -106,7 +106,17 @@ const SelectInput: FC<Props> = ({
 	useInput(
 		useCallback(
 			(input, key) => {
-				if (input === '`' || key.leftArrow ) {
+				let navigateBack
+				let navigateForward
+				if (displayDirection === 'row') {
+					navigateBack = (input === '`' || key.leftArrow);
+					navigateForward = (key.tab || key.rightArrow);
+				}
+				if (displayDirection === 'column') {
+					navigateBack = (input === '`' || key.upArrow);
+					navigateForward = (key.tab || key.downArrow);
+				}
+				if (navigateBack) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -127,7 +137,7 @@ const SelectInput: FC<Props> = ({
 					}
 				}
 
-				if (key.tab || key.rightArrow) {
+				if (navigateForward) {
 					const atLastIndex =
 						selectedIndex === (hasLimit ? limit : items.length) - 1;
 					const nextIndex = hasLimit ? selectedIndex : 0;
