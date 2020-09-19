@@ -79,7 +79,7 @@ function SelectInput<V>({
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
 
-	const previousItems = useRef<Array<Item<V>>(items);
+	const previousItems = useRef<Array<Item<V>>>(items);
 
 	useEffect(() => {
 		if (!isEqual(previousItems.current, items)) {
