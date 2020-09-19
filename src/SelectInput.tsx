@@ -14,7 +14,7 @@ interface Props<V> {
 	 * Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 	 * If no `key` prop is provided, `value` will be used as the item key.
 	 */
-	items?: Item<V>[];
+	items?: Array<Item<V>>;
 
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components at the same time and input must be "routed" to a specific component.
@@ -62,6 +62,7 @@ export interface Item<V> {
 	value: V;
 }
 
+// eslint-disable-next-line react/function-component-definition
 function SelectInput<V>({
 	items = [],
 	isFocused = true,
@@ -78,7 +79,7 @@ function SelectInput<V>({
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
 
-	const previousItems = useRef<Item<V>[]>(items);
+	const previousItems = useRef<Array<Item<V>>(items);
 
 	useEffect(() => {
 		if (!isEqual(previousItems.current, items)) {
@@ -173,6 +174,6 @@ function SelectInput<V>({
 			})}
 		</Box>
 	);
-};
+}
 
 export default SelectInput;
