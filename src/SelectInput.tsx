@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState, useEffect, useRef, useCallback} from 'react';
 import type {FC} from 'react';
-import {isEqual} from 'lodash';
+import isEqual = require('lodash.isequal');
 import arrayRotate = require('arr-rotate');
 import {Box, useInput} from 'ink';
 import Indicator from './Indicator';
