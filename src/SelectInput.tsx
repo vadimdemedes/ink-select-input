@@ -9,12 +9,12 @@ import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
 
-interface Props {
+interface Props<V> {
 	/**
 	 * Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 	 * If no `key` prop is provided, `value` will be used as the item key.
 	 */
-	items?: Item[];
+	items?: Array<Item<V>>;
 
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components at the same time and input must be "routed" to a specific component.
@@ -48,21 +48,22 @@ interface Props {
 	/**
 	 * Function to call when user selects an item. Item object is passed to that function as an argument.
 	 */
-	onSelect?: (item: Item) => void;
+	onSelect?: (item: Item<V>) => void;
 
 	/**
 	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
 	 */
-	onHighlight?: (item: Item) => void;
+	onHighlight?: (item: Item<V>) => void;
 }
 
-export interface Item {
+export interface Item<V> {
 	key?: string;
 	label: string;
-	value: unknown;
+	value: V;
 }
 
-const SelectInput: FC<Props> = ({
+// eslint-disable-next-line react/function-component-definition
+function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
@@ -71,14 +72,14 @@ const SelectInput: FC<Props> = ({
 	limit: customLimit,
 	onSelect,
 	onHighlight
-}) => {
+}: Props<V>): JSX.Element {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 	const hasLimit =
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
 
-	const previousItems = useRef<Item[]>(items);
+	const previousItems = useRef<Array<Item<V>>(items);
 
 	useEffect(() => {
 		if (!isEqual(previousItems.current, items)) {
@@ -173,6 +174,6 @@ const SelectInput: FC<Props> = ({
 			})}
 		</Box>
 	);
-};
+}
 
 export default SelectInput;
