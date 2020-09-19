@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState, useEffect, useRef, useCallback} from 'react';
 import type {FC} from 'react';
 import isEqual = require('lodash.isequal');
+import _map = require('lodash.map');
 import arrayRotate = require('arr-rotate');
 import {Box, useInput} from 'ink';
 import Indicator from './Indicator';
@@ -82,7 +83,7 @@ function SelectInput<V>({
 	const previousItems = useRef<Array<Item<V>>>(items);
 
 	useEffect(() => {
-		if (!isEqual(previousItems.current, items)) {
+		if (!isEqual(_map(previousItems.current, 'value'), _map(items, 'value'))) {
 			setRotateIndex(0);
 			setSelectedIndex(0);
 		}

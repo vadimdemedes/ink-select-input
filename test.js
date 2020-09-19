@@ -415,6 +415,54 @@ test('list - move to the beginning of the list after reaching the end', async t 
 	t.is(actual.lastFrame(), expected.lastFrame());
 });
 
+test('list - do not reset selection when the values of new items are not changed', async t => {
+	const items = [
+		{
+			label: 'First',
+			value: 'first'
+		},
+		{
+			label: 'Second',
+			value: 'second'
+		}
+	];
+
+	const actual = render(<SelectInput items={items} />);
+
+	await delay(100);
+	actual.stdin.write(ARROW_DOWN);
+	await delay(100);
+
+	const newItems = [
+		{
+			label: 'First new',
+			value: 'first'
+		},
+		{
+			label: 'Second new',
+			value: 'second'
+		}
+	];
+
+	actual.rerender(<SelectInput items={newItems} />);
+
+	const expected = render(
+		<Box flexDirection="column">
+			<Box>
+				<Indicator />
+				<Item label="First new" />
+			</Box>
+
+			<Box>
+				<Indicator isSelected />
+				<Item isSelected label="Second new" />
+			</Box>
+		</Box>
+	);
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+});
+
 test('list - reset selection when new items are received', async t => {
 	const items = [
 		{
