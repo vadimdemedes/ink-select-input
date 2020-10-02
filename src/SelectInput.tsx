@@ -81,7 +81,7 @@ const SelectInput: FC<Props> = ({
 	onHighlight
 }) => {
 	const [rotateIndex, setRotateIndex] = useState(0);
-	const [selectedIndex, setSelectedIndex] = useState(initialIndex || index);
+	const [selectedIndex, setSelectedIndex] = useState(typeof index === 'number' ? index : initialIndex);
 	const hasLimit =
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
