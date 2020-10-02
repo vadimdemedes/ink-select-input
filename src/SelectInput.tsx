@@ -29,11 +29,9 @@ interface Props<V> {
 	 * @default 0
 	 */
 	initialIndex?: number;
-	
+
 	/**
 	 * Optional controlled index of item in `items` array.
-	 *
-	 * @default 0
 	 */
 	index?: number;
 
@@ -74,7 +72,7 @@ function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
-	index = 0,
+	index,
 	indicatorComponent = Indicator,
 	itemComponent = Item,
 	limit: customLimit,
