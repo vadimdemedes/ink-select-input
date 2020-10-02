@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"description": "Select input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-select-input",
@@ -29,18 +29,18 @@
 	"dependencies": {
 		"arr-rotate": "^1.0.0",
 		"figures": "^3.2.0",
-		"lodash": "^4.17.19",
 		"lodash.isequal": "^4.5.0"
 	},
 	"peerDependencies": {
-		"ink": "^3.0.0-7"
+		"ink": "^3.0.5",
+		"react": "^16.8.2"
 	},
 	"devDependencies": {
 		"@ava/babel": "^1.0.1",
 		"@babel/core": "^7.3.3",
 		"@babel/preset-react": "^7.0.0",
 		"@sindresorhus/tsconfig": "^0.7.0",
-		"@types/lodash": "^4.14.158",
+		"@types/lodash.isequal": "^4.5.5",
 		"@types/react": "^16.9.43",
 		"@vdemedes/prettier-config": "^1.0.1",
 		"ava": "^3.9.0",
@@ -49,7 +49,7 @@
 		"eslint-config-xo-typescript": "^0.31.0",
 		"eslint-plugin-react": "^7.20.0",
 		"eslint-plugin-react-hooks": "^4.0.4",
-		"ink": "^3.0.0-3",
+		"ink": "^3.0.5",
 		"ink-testing-library": "^2.0.0",
 		"prettier": "^2.0.5",
 		"react": "^16.8.2",
