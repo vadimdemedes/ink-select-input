@@ -9,12 +9,6 @@
 		"email": "vdemedes@gmail.com",
 		"url": "https://github.com/vadimdemedes"
 	},
-	"contributors": [
-		{
-			"name": "Megrez Lu",
-			"email": "lujiajing1126@gmail.com"
-		}
-	],
 	"main": "build",
 	"engines": {
 		"node": ">=10"
