@@ -82,7 +82,12 @@ function SelectInput<V>({
 	const previousItems = useRef<Array<Item<V>>>(items);
 
 	useEffect(() => {
-		if (!isEqual(previousItems.current.map(item => item.value), items.map(item => item.value))) {
+		if (
+			!isEqual(
+				previousItems.current.map(item => item.value),
+				items.map(item => item.value)
+			)
+		) {
 			setRotateIndex(0);
 			setSelectedIndex(0);
 		}
