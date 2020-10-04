@@ -29,8 +29,7 @@
 	"dependencies": {
 		"arr-rotate": "^1.0.0",
 		"figures": "^3.2.0",
-		"lodash.isequal": "^4.5.0",
-		"lodash.map": "^4.6.0"
+		"lodash.isequal": "^4.5.0"
 	},
 	"peerDependencies": {
 		"ink": "^3.0.5",
@@ -42,7 +41,6 @@
 		"@babel/preset-react": "^7.0.0",
 		"@sindresorhus/tsconfig": "^0.7.0",
 		"@types/lodash.isequal": "^4.5.5",
-		"@types/lodash.map": "^4.6.13",
 		"@types/react": "^16.9.43",
 		"@vdemedes/prettier-config": "^1.0.1",
 		"ava": "^3.9.0",
