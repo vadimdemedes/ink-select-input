@@ -84,7 +84,7 @@ function SelectInput<V>({
 	onHighlight,
 	defaultColor,
 	accentColor,
-	displayDirection
+	displayDirection = 'column'
 }: Props<V>): JSX.Element {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
