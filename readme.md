@@ -37,7 +37,7 @@ const Demo = () => {
 		}
 	];
 
-	return <SelectInput items={items} onSelect={handleSelect} />;
+	return <SelectInput items={items} onSelect={handleSelect} defaultColor="green" accentColor="red" displayDirection="column"/>;
 };
 
 render(<Demo />);
@@ -98,3 +98,16 @@ Function to call when user selects an item. Item object is passed to that functi
 Type: `function`
 
 Function to call when user highlights an item. Item object is passed to that function as an argument.
+
+### direction
+
+Type: `argument`<br>
+Default: `column`
+
+Change the direction in which list items are displayed. Possible values are `row` or `column`.
+
+### defaultColor / accentColor
+
+Type: `argument`
+
+Argument that accepts standard colors. `defaultColor` is for the text, and `accentColor` is for the highlighted element.
