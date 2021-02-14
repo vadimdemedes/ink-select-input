@@ -31,6 +31,11 @@ interface Props<V> {
 	initialIndex?: number;
 
 	/**
+	 * Optional controlled index of item in `items` array.
+	 */
+	index?: number;
+
+	/**
 	 * Number of items to display.
 	 */
 	limit?: number;
@@ -51,9 +56,9 @@ interface Props<V> {
 	onSelect?: (item: Item<V>) => void;
 
 	/**
-	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
+	 * Function to call when user highlights an item. Item object is passed to that function as an argument, additionaly its index.
 	 */
-	onHighlight?: (item: Item<V>) => void;
+	onHighlight?: (item: Item<V>, index: number) => void;
 }
 
 export interface Item<V> {
@@ -67,6 +72,7 @@ function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
+	index,
 	indicatorComponent = Indicator,
 	itemComponent = Item,
 	limit: customLimit,
@@ -74,7 +80,7 @@ function SelectInput<V>({
 	onHighlight
 }: Props<V>): JSX.Element {
 	const [rotateIndex, setRotateIndex] = useState(0);
-	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+	const [selectedIndex, setSelectedIndex] = useState(typeof index === 'number' ? index : initialIndex);
 	const hasLimit =
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
@@ -94,6 +100,13 @@ function SelectInput<V>({
 
 		previousItems.current = items;
 	}, [items]);
+	
+	useEffect(() => {
+		if (typeof index === 'number') {
+			setRotateIndex(index);
+			setSelectedIndex(index);
+		}
+	}, [index]);
 
 	useInput(
 		useCallback(
@@ -115,7 +128,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 
@@ -134,7 +147,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 
