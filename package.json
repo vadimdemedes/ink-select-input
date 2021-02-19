@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input",
-	"version": "4.2.0",
+	"version": "4.2.1",
 	"description": "Select input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-select-input",
@@ -32,8 +32,8 @@
 		"lodash.isequal": "^4.5.0"
 	},
 	"peerDependencies": {
-		"ink": "^3.0.5",
-		"react": "^16.8.2"
+		"ink": ">=3.0.5",
+		"react": ">=16.8.2"
 	},
 	"devDependencies": {
 		"@ava/babel": "^1.0.1",
