@@ -1,6 +1,6 @@
 {
 	"name": "ink-select-input",
-	"version": "4.2.1",
+	"version": "4.2.0",
 	"description": "Select input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-select-input",
@@ -33,7 +33,7 @@
 	},
 	"peerDependencies": {
 		"ink": ">=3.0.5",
-		"react": ">=16.8.2"
+		"react": "^16.5.2 || ^17.0.0"
 	},
 	"devDependencies": {
 		"@ava/babel": "^1.0.1",
@@ -52,7 +52,7 @@
 		"ink": "^3.0.5",
 		"ink-testing-library": "^2.0.0",
 		"prettier": "^2.0.5",
-		"react": "^16.8.2",
+		"react": "^17.0.0",
 		"sinon": "^7.2.7",
 		"typescript": "^3.9.7",
 		"xo": "^0.32.0"
