@@ -8,6 +8,7 @@ import Indicator from './Indicator';
 import type {Props as IndicatorProps} from './Indicator';
 import Item from './Item';
 import type {Props as ItemProps} from './Item';
+import Colors from './Colors';
 
 interface Props<V> {
 	/**
@@ -54,6 +55,15 @@ interface Props<V> {
 	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
 	 */
 	onHighlight?: (item: Item<V>) => void;
+
+	defaultColor?: Colors;
+	// Any color i.e: 'red', 'green' etc
+
+	accentColor?: Colors;
+	// Any color i.e: 'red', 'green' etc
+
+	displayDirection?: 'column' | 'row';
+	// Either 'row' or 'column'
 }
 
 export interface Item<V> {
@@ -71,7 +81,10 @@ function SelectInput<V>({
 	itemComponent = Item,
 	limit: customLimit,
 	onSelect,
-	onHighlight
+	onHighlight,
+	defaultColor,
+	accentColor,
+	displayDirection = 'column'
 }: Props<V>): JSX.Element {
 	const [rotateIndex, setRotateIndex] = useState(0);
 	const [selectedIndex, setSelectedIndex] = useState(initialIndex);
@@ -98,7 +111,7 @@ function SelectInput<V>({
 	useInput(
 		useCallback(
 			(input, key) => {
-				if (input === 'k' || key.upArrow) {
+				if (input === 'k' || key.upArrow || key.leftArrow) {
 					const lastIndex = (hasLimit ? limit : items.length) - 1;
 					const atFirstIndex = selectedIndex === 0;
 					const nextIndex = hasLimit ? selectedIndex : lastIndex;
@@ -119,7 +132,8 @@ function SelectInput<V>({
 					}
 				}
 
-				if (input === 'j' || key.downArrow) {
+				// Allows tabbing through elements
+				if (input === 'j' || key.downArrow || key.tab || key.rightArrow) {
 					const atLastIndex =
 						selectedIndex === (hasLimit ? limit : items.length) - 1;
 					const nextIndex = hasLimit ? selectedIndex : 0;
@@ -166,14 +180,14 @@ function SelectInput<V>({
 		: items;
 
 	return (
-		<Box flexDirection="column">
+		<Box flexDirection={displayDirection}>
 			{slicedItems.map((item, index) => {
 				const isSelected = index === selectedIndex;
 
 				return (
 					<Box key={item.key ?? item.value}>
-						{React.createElement(indicatorComponent, {isSelected})}
-						{React.createElement(itemComponent, {...item, isSelected})}
+						{React.createElement(indicatorComponent, {isSelected, accentColor})}
+						{React.createElement(itemComponent, {...item, isSelected, defaultColor, accentColor})}
 					</Box>
 				);
 			})}
