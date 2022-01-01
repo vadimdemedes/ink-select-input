@@ -7,9 +7,9 @@ export interface Props {
 	isSelected?: boolean;
 }
 
-const Indicator: FC<Props> = ({isSelected = false}) => (
+const Indicator: FC<Props> = ({isSelected = false, color}) => (
 	<Box marginRight={1}>
-		{isSelected ? <Text color="blue">{figures.pointer}</Text> : <Text> </Text>}
+		{isSelected ? <Text color={color}>{figures.pointer}</Text> : <Text> </Text>}
 	</Box>
 );
 
