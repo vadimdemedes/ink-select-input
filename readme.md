@@ -75,6 +75,12 @@ Type: `number`
 
 Number of items to display.
 
+### color
+
+Type: `string`
+
+Custom color when an item is selected.
+
 ### indicatorComponent
 
 Type: `Component`
