@@ -36,6 +36,11 @@ interface Props<V> {
 	limit?: number;
 
 	/**
+	 * Custom color when an item is selected.
+	 */
+	color?: string;
+
+	/**
 	 * Custom component to override the default indicator component.
 	 */
 	indicatorComponent?: FC<IndicatorProps>;
