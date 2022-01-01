@@ -5,6 +5,7 @@ import * as figures from 'figures';
 
 export interface Props {
 	isSelected?: boolean;
+	color?: string;
 }
 
 const Indicator: FC<Props> = ({isSelected = false, color}) => (

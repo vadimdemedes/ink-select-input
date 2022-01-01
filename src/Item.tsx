@@ -4,6 +4,7 @@ import {Text} from 'ink';
 
 export interface Props {
 	isSelected?: boolean;
+	color?: string;
 	label: string;
 }
 
