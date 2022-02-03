@@ -75,7 +75,7 @@ Type: `number`
 
 Number of items to display.
 
-### color
+### selectedItemColor
 
 Type: `string`
 

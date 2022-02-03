@@ -38,7 +38,7 @@ interface Props<V> {
 	/**
 	 * Custom color when an item is selected.
 	 */
-	color?: string;
+	selectedItemColor?: string;
 
 	/**
 	 * Custom component to override the default indicator component.
@@ -72,7 +72,7 @@ function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
-	color = 'blue',
+	selectedItemColor = 'blue',
 	indicatorComponent = Indicator,
 	itemComponent = Item,
 	limit: customLimit,
@@ -178,8 +178,8 @@ function SelectInput<V>({
 
 				return (
 					<Box key={item.key ?? item.value}>
-						{React.createElement(indicatorComponent, {isSelected, color})}
-						{React.createElement(itemComponent, {...item, isSelected, color})}
+						{React.createElement(indicatorComponent, {isSelected, selectedItemColor})}
+						{React.createElement(itemComponent, {...item, isSelected, selectedItemColor})}
 					</Box>
 				);
 			})}
