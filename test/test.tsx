@@ -5,10 +5,13 @@ import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
 import delay from 'delay';
-import SelectInput, {Indicator, Item} from '.';
+import SelectInput, {Indicator, Item} from '../src/index.js';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const ARROW_UP = '\u001B[A';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const ARROW_DOWN = '\u001B[B';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const ENTER = '\r';
 
 test('indicator', t => {
@@ -112,9 +115,12 @@ test('list - custom indicator', t => {
 		}
 	];
 
-	const CustomIndicator = () => <Text>X </Text>;
+	function CustomIndicator() {
+		return <Text>X </Text>;
+	}
 
 	const actual = render(
+		// eslint-disable-next-line react/jsx-no-bind
 		<SelectInput items={items} indicatorComponent={CustomIndicator} />
 	);
 
@@ -138,9 +144,12 @@ test('list - custom item', t => {
 		}
 	];
 
-	const CustomItem = ({label}) => <Text>- {label}</Text>;
+	function CustomItem({label}: {label: string}) {
+		return <Text>- {label}</Text>;
+	}
 
 	const actual = render(
+		// eslint-disable-next-line react/jsx-no-bind
 		<SelectInput items={items} itemComponent={CustomItem} />
 	);
 
@@ -593,7 +602,6 @@ test('list - handle enter', async t => {
 	t.deepEqual(onSelect.firstCall.args[0], items[1]);
 });
 
-// eslint-disable-next-line @typescript-eslint/quotes
 test("list - don't rotate when there are less items than limit", async t => {
 	const items = [
 		{
