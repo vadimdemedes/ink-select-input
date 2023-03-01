@@ -5,11 +5,11 @@ import {spy} from 'sinon';
 import figures from 'figures';
 import test from 'ava';
 import delay from 'delay';
-import SelectInput, {Indicator, Item} from '.';
+import SelectInput, {Indicator, Item} from '../src/index.js';
 
-const ARROW_UP = '\u001B[A';
-const ARROW_DOWN = '\u001B[B';
-const ENTER = '\r';
+const arrowUp = '\u001B[A';
+const arrowDown = '\u001B[B';
+const enter = '\r';
 
 test('indicator', t => {
 	const {lastFrame} = render(
@@ -112,9 +112,12 @@ test('list - custom indicator', t => {
 		}
 	];
 
-	const CustomIndicator = () => <Text>X </Text>;
+	function CustomIndicator() {
+		return <Text>X </Text>;
+	}
 
 	const actual = render(
+		// eslint-disable-next-line react/jsx-no-bind
 		<SelectInput items={items} indicatorComponent={CustomIndicator} />
 	);
 
@@ -138,9 +141,12 @@ test('list - custom item', t => {
 		}
 	];
 
-	const CustomItem = ({label}) => <Text>- {label}</Text>;
+	function CustomItem({label}: {label: string}) {
+		return <Text>- {label}</Text>;
+	}
 
 	const actual = render(
+		// eslint-disable-next-line react/jsx-no-bind
 		<SelectInput items={items} itemComponent={CustomItem} />
 	);
 
@@ -171,7 +177,7 @@ test('list - ignore input if not focused', async t => {
 	const actual = render(<SelectInput isFocused={false} items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const expected = render(
@@ -210,7 +216,7 @@ test('list - move up with up arrow key', async t => {
 	const actual = render(<SelectInput items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_UP);
+	actual.stdin.write(arrowUp);
 	await delay(100);
 
 	const expected = render(
@@ -298,7 +304,7 @@ test('list - move down with arrow down key', async t => {
 	const actual = render(<SelectInput items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const expected = render(
@@ -386,11 +392,11 @@ test('list - move to the beginning of the list after reaching the end', async t 
 	const actual = render(<SelectInput items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const expected = render(
@@ -430,7 +436,7 @@ test('list - do not reset selection when the values of new items are not changed
 	const actual = render(<SelectInput items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const newItems = [
@@ -478,7 +484,7 @@ test('list - reset selection when new items are received', async t => {
 	const actual = render(<SelectInput items={items} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const newItems = [
@@ -546,9 +552,9 @@ test('list - item limit', async t => {
 	t.is(actual.lastFrame(), expected.lastFrame());
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	expected.rerender(
@@ -584,9 +590,9 @@ test('list - handle enter', async t => {
 	const {stdin} = render(<SelectInput items={items} onSelect={onSelect} />);
 
 	await delay(100);
-	stdin.write(ARROW_DOWN);
+	stdin.write(arrowDown);
 	await delay(100);
-	stdin.write(ENTER);
+	stdin.write(enter);
 	await delay(100);
 
 	t.true(onSelect.calledOnce);
@@ -608,9 +614,9 @@ test("list - don't rotate when there are less items than limit", async t => {
 	const actual = render(<SelectInput items={items} limit={4} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const expected = render(
@@ -649,9 +655,9 @@ test('list - rotate when there are more items than limit', async t => {
 	const actual = render(<SelectInput items={items} limit={2} />);
 
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
-	actual.stdin.write(ARROW_DOWN);
+	actual.stdin.write(arrowDown);
 	await delay(100);
 
 	const expected = render(
@@ -693,9 +699,9 @@ test('list - onHighlight', async t => {
 	);
 
 	await delay(100);
-	stdin.write(ARROW_DOWN);
+	stdin.write(arrowDown);
 	await delay(100);
-	stdin.write(ARROW_DOWN);
+	stdin.write(arrowDown);
 	await delay(100);
 
 	t.true(onHighlight.calledTwice);

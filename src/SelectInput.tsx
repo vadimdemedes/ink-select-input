@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React, {type FC} from 'react';
 import {useState, useEffect, useRef, useCallback} from 'react';
-import type {FC} from 'react';
-import isEqual = require('lodash.isequal');
-import arrayRotate = require('arr-rotate');
+import isEqual from 'lodash.isequal';
+import arrayRotate from 'arr-rotate';
 import {Box, useInput} from 'ink';
-import Indicator from './Indicator';
-import type {Props as IndicatorProps} from './Indicator';
-import Item from './Item';
-import type {Props as ItemProps} from './Item';
+import Indicator from './Indicator.js';
+import type {Props as IndicatorProps} from './Indicator.js';
+import ItemComponent from './Item.js';
+import type {Props as ItemProps} from './Item.js';
 
-interface Props<V> {
+type Props<V> = {
 	/**
 	 * Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 	 * If no `key` prop is provided, `value` will be used as the item key.
@@ -54,21 +53,20 @@ interface Props<V> {
 	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
 	 */
 	onHighlight?: (item: Item<V>) => void;
-}
+};
 
-export interface Item<V> {
+export type Item<V> = {
 	key?: string;
 	label: string;
 	value: V;
-}
+};
 
-// eslint-disable-next-line react/function-component-definition
 function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
 	indicatorComponent = Indicator,
-	itemComponent = Item,
+	itemComponent = ItemComponent,
 	limit: customLimit,
 	onSelect,
 	onHighlight
@@ -119,7 +117,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex]!);
 					}
 				}
 
@@ -138,7 +136,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]);
+						onHighlight(slicedItems[nextSelectedIndex]!);
 					}
 				}
 
@@ -148,7 +146,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onSelect === 'function') {
-						onSelect(slicedItems[selectedIndex]);
+						onSelect(slicedItems[selectedIndex]!);
 					}
 				}
 			},
@@ -175,6 +173,7 @@ function SelectInput<V>({
 				const isSelected = index === selectedIndex;
 
 				return (
+					// @ts-expect-error - `key` can't be optional but `item.value` is generic T
 					<Box key={item.key ?? item.value}>
 						{React.createElement(indicatorComponent, {isSelected})}
 						{React.createElement(itemComponent, {...item, isSelected})}

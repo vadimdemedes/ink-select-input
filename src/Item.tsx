@@ -1,14 +1,13 @@
 import * as React from 'react';
-import type {FC} from 'react';
 import {Text} from 'ink';
 
-export interface Props {
+export type Props = {
 	isSelected?: boolean;
 	label: string;
-}
+};
 
-const Item: FC<Props> = ({isSelected = false, label}) => (
-	<Text color={isSelected ? 'blue' : undefined}>{label}</Text>
-);
+function Item({isSelected = false, label}: Props) {
+	return <Text color={isSelected ? 'blue' : undefined}>{label}</Text>;
+}
 
 export default Item;
