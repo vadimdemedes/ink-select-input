@@ -593,7 +593,6 @@ test('list - handle enter', async t => {
 	t.deepEqual(onSelect.firstCall.args[0], items[1]);
 });
 
-// eslint-disable-next-line @typescript-eslint/quotes
 test("list - don't rotate when there are less items than limit", async t => {
 	const items = [
 		{
