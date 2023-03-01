@@ -5,11 +5,12 @@ import * as figures from 'figures';
 
 export interface Props {
 	isSelected?: boolean;
+	selectedItemColor?: string;
 }
 
-const Indicator: FC<Props> = ({isSelected = false}) => (
+const Indicator: FC<Props> = ({isSelected = false, selectedItemColor}) => (
 	<Box marginRight={1}>
-		{isSelected ? <Text color="blue">{figures.pointer}</Text> : <Text> </Text>}
+		{isSelected ? <Text color={selectedItemColor}>{figures.pointer}</Text> : <Text> </Text>}
 	</Box>
 );
 
