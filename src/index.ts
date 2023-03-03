@@ -1,5 +1,7 @@
-import SelectInput from './SelectInput';
+export {
+	default as Indicator,
+	type Props as IndicatorProps
+} from './Indicator.js';
+export {default as Item, type Props as ItemProps} from './Item.js';
 
-export default SelectInput;
-export {default as Indicator, Props as IndicatorProps} from './Indicator';
-export {default as Item, Props as ItemProps} from './Item';
+export {default} from './SelectInput.js';

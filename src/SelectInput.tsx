@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React, {type FC} from 'react';
 import {useState, useEffect, useRef, useCallback} from 'react';
-import type {FC} from 'react';
-import isEqual = require('lodash.isequal');
-import arrayRotate = require('arr-rotate');
+import isEqual from 'lodash.isequal';
+import arrayRotate from 'arr-rotate';
 import {Box, useInput} from 'ink';
-import Indicator from './Indicator';
-import type {Props as IndicatorProps} from './Indicator';
-import Item from './Item';
-import type {Props as ItemProps} from './Item';
+import Indicator from './Indicator.js';
+import type {Props as IndicatorProps} from './Indicator.js';
+import ItemComponent from './Item.js';
+import type {Props as ItemProps} from './Item.js';
 
-interface Props<V> {
+type Props<V> = {
 	/**
 	 * Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 	 * If no `key` prop is provided, `value` will be used as the item key.
@@ -61,41 +60,48 @@ interface Props<V> {
 	onHighlight?: (item: Item<V>, index: number) => void;
 }
 
-export interface Item<V> {
+export type Item<V> = {
 	key?: string;
 	label: string;
 	value: V;
-}
+};
 
-// eslint-disable-next-line react/function-component-definition
 function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
 	index,
 	indicatorComponent = Indicator,
-	itemComponent = Item,
+	itemComponent = ItemComponent,
 	limit: customLimit,
 	onSelect,
 	onHighlight
 }: Props<V>): JSX.Element {
-	const [rotateIndex, setRotateIndex] = useState(0);
-	const [selectedIndex, setSelectedIndex] = useState(typeof index === 'number' ? index : initialIndex);
-	const hasLimit =
-		typeof customLimit === 'number' && items.length > customLimit;
-	const limit = hasLimit ? Math.min(customLimit!, items.length) : items.length;
-
+  const hasLimit =
+  typeof customLimit === 'number' && items.length > customLimit;
+	const limit = hasLimit ? Math.min(customLimit, items.length) : items.length;
+	const lastIndex = limit - 1;
+	const [rotateIndex, setRotateIndex] = useState(
+    initialIndex > lastIndex ? lastIndex - initialIndex : 0
+	);
+  const defaultSelectedIndex = typeof index === 'number' ? index : initialIndex;
+  const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex > lastIndex ? defaultSelectedIndex : initialIndex);
 	const previousItems = useRef<Array<Item<V>>>(items);
 
 	useEffect(() => {
-		if (!isEqual(previousItems.current, items)) {
+		if (
+			!isEqual(
+				previousItems.current.map(item => item.value),
+				items.map(item => item.value)
+			)
+		) {
 			setRotateIndex(0);
 			setSelectedIndex(0);
 		}
 
 		previousItems.current = items;
 	}, [items]);
-	
+
 	useEffect(() => {
 		if (typeof index === 'number') {
 			setRotateIndex(index);
@@ -152,7 +158,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onSelect === 'function') {
-						onSelect(slicedItems[selectedIndex]);
+						onSelect(slicedItems[selectedIndex]!);
 					}
 				}
 			},
@@ -179,6 +185,7 @@ function SelectInput<V>({
 				const isSelected = index === selectedIndex;
 
 				return (
+					// @ts-expect-error - `key` can't be optional but `item.value` is generic T
 					<Box key={item.key ?? item.value}>
 						{React.createElement(indicatorComponent, {isSelected})}
 						{React.createElement(itemComponent, {...item, isSelected})}
