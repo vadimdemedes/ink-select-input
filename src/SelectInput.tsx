@@ -30,6 +30,11 @@ type Props<V> = {
 	initialIndex?: number;
 
 	/**
+	 * Optional controlled index of item in `items` array.
+	 */
+	index?: number;
+
+	/**
 	 * Number of items to display.
 	 */
 	limit?: number;
@@ -50,10 +55,10 @@ type Props<V> = {
 	onSelect?: (item: Item<V>) => void;
 
 	/**
-	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
+	 * Function to call when user highlights an item. Item object is passed to that function as an argument, additionaly its index.
 	 */
-	onHighlight?: (item: Item<V>) => void;
-};
+	onHighlight?: (item: Item<V>, index: number) => void;
+}
 
 export type Item<V> = {
 	key?: string;
@@ -65,22 +70,22 @@ function SelectInput<V>({
 	items = [],
 	isFocused = true,
 	initialIndex = 0,
+	index,
 	indicatorComponent = Indicator,
 	itemComponent = ItemComponent,
 	limit: customLimit,
 	onSelect,
 	onHighlight
-}: Props<V>) {
-	const hasLimit =
-		typeof customLimit === 'number' && items.length > customLimit;
+}: Props<V>): JSX.Element {
+  const hasLimit =
+  typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit, items.length) : items.length;
 	const lastIndex = limit - 1;
 	const [rotateIndex, setRotateIndex] = useState(
-		initialIndex > lastIndex ? lastIndex - initialIndex : 0
+    initialIndex > lastIndex ? lastIndex - initialIndex : 0
 	);
-	const [selectedIndex, setSelectedIndex] = useState(
-		initialIndex ? (initialIndex > lastIndex ? lastIndex : initialIndex) : 0
-	);
+  const defaultSelectedIndex = typeof index === 'number' ? index : initialIndex;
+  const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex > lastIndex ? defaultSelectedIndex : initialIndex);
 	const previousItems = useRef<Array<Item<V>>>(items);
 
 	useEffect(() => {
@@ -96,6 +101,13 @@ function SelectInput<V>({
 
 		previousItems.current = items;
 	}, [items]);
+
+	useEffect(() => {
+		if (typeof index === 'number') {
+			setRotateIndex(index);
+			setSelectedIndex(index);
+		}
+	}, [index]);
 
 	useInput(
 		useCallback(
@@ -117,7 +129,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]!);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 
@@ -136,7 +148,7 @@ function SelectInput<V>({
 						: items;
 
 					if (typeof onHighlight === 'function') {
-						onHighlight(slicedItems[nextSelectedIndex]!);
+						onHighlight(slicedItems[nextSelectedIndex], nextSelectedIndex);
 					}
 				}
 

@@ -69,6 +69,13 @@ Default: `0`
 
 Index of initially-selected item in `items` array.
 
+### index
+
+Type: `number`
+
+Optional controlled index of item in `items` array.
+If this prop is used, [initialIndex](#initialIndex) will be ignored.
+
 ### limit
 
 Type: `number`
@@ -97,4 +104,4 @@ Function to call when user selects an item. Item object is passed to that functi
 
 Type: `function`
 
-Function to call when user highlights an item. Item object is passed to that function as an argument.
+Function to call when user highlights an item. Item object is passed to that function as an argument. The second argument is the [index](#index) of the highlighted item.

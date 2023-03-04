@@ -85,18 +85,121 @@ test('list - initial index', t => {
 		}
 	];
 
-	const actual = render(<SelectInput items={items} initialIndex={1} />);
+	const actual = render(<SelectInput items={items} initialIndex={1}/>);
 
 	const expected = render(
 		<Box flexDirection="column">
 			<Box>
-				<Indicator />
-				<Item label="First" />
+				<Indicator/>
+				<Item label="First"/>
 			</Box>
 
 			<Box>
-				<Indicator isSelected />
-				<Item isSelected label="Second" />
+				<Indicator isSelected/>
+				<Item isSelected label="Second"/>
+			</Box>
+		</Box>
+	);
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+});
+
+test('list - controlled index', t => {
+	const items = [
+		{
+			label: 'First',
+			value: 'first'
+		},
+		{
+			label: 'Second',
+			value: 'second'
+		},
+		{
+			label: 'Third',
+			value: 'third'
+		}
+	];
+
+	const actual = render(<SelectInput items={items} index={2}/>);
+
+	const expected = render(
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
+			</Box>
+		</Box>
+	);
+
+	t.is(actual.lastFrame(), expected.lastFrame());
+
+	actual.rerender(<SelectInput items={items} index={0}/>);
+
+	const newExpected = render(
+		<Box flexDirection="column">
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Third"/>
+			</Box>
+		</Box>
+	);
+
+	t.is(actual.lastFrame(), newExpected.lastFrame());
+});
+
+test('list - controlled index ignores initialIndex', t => {
+	const items = [
+		{
+			label: 'First',
+			value: 'first'
+		},
+		{
+			label: 'Second',
+			value: 'second'
+		},
+		{
+			label: 'Third',
+			value: 'third'
+		}
+	];
+
+	const actual = render(<SelectInput items={items} initialIndex={0} index={2}/>);
+
+	const expected = render(
+		<Box flexDirection="column">
+			<Box>
+				<Indicator/>
+				<Item label="First"/>
+			</Box>
+
+			<Box>
+				<Indicator/>
+				<Item label="Second"/>
+			</Box>
+
+			<Box>
+				<Indicator isSelected/>
+				<Item isSelected label="Third"/>
 			</Box>
 		</Box>
 	);
@@ -707,4 +810,33 @@ test('list - onHighlight', async t => {
 	t.true(onHighlight.calledTwice);
 	t.deepEqual(onHighlight.firstCall.args[0], items[1]);
 	t.deepEqual(onHighlight.secondCall.args[0], items[2]);
+});
+
+test('list - onHighlight updates index', async t => {
+	const items = [
+		{
+			label: 'First',
+			value: 'first'
+		},
+		{
+			label: 'Second',
+			value: 'second'
+		},
+		{
+			label: 'Third',
+			value: 'third'
+		}
+	];
+
+	const onHighlight = spy();
+	const {stdin} = render(
+		<SelectInput items={items} limit={2} onHighlight={onHighlight}/>
+	);
+
+	await delay(100);
+	stdin.write(ARROW_DOWN);
+
+	t.true(onHighlight.calledOnce);
+	t.deepEqual(onHighlight.firstCall.args[0], items[1]);
+	t.is(onHighlight.firstCall.args[1], 1);
 });
