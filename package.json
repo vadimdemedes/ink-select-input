@@ -33,11 +33,11 @@
 	"dependencies": {
 		"arr-rotate": "^1.0.0",
 		"figures": "^5.0.0",
-		"lodash.isequal": "^4.5.0"
+		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^3.0.1",
-		"@types/lodash.isequal": "^4.5.5",
+		"@types/lodash": "^4.14.191",
 		"@types/react": "^18.0.0",
 		"@types/sinon": "^10.0.13",
 		"@vdemedes/prettier-config": "^1.0.1",
