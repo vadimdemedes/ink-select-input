@@ -1,6 +1,6 @@
 import React, {type FC} from 'react';
 import {useState, useEffect, useRef, useCallback} from 'react';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash/isEqual.js';
 import arrayRotate from 'arr-rotate';
 import {Box, useInput} from 'ink';
 import Indicator from './Indicator.js';
