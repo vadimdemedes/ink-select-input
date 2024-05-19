@@ -16,7 +16,7 @@ test('indicator', t => {
 		<Box>
 			<Indicator />
 			<Text>X</Text>
-		</Box>
+		</Box>,
 	);
 
 	t.is(lastFrame(), '  X');
@@ -46,12 +46,12 @@ test('list', t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -67,7 +67,7 @@ test('list', t => {
 				<Indicator />
 				<Item label="Second" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -77,12 +77,12 @@ test('list - initial index', t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} initialIndex={1} />);
@@ -98,7 +98,7 @@ test('list - initial index', t => {
 				<Indicator isSelected />
 				<Item isSelected label="Second" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -108,8 +108,8 @@ test('list - custom indicator', t => {
 	const items = [
 		{
 			label: 'Test',
-			value: 'test'
-		}
+			value: 'test',
+		},
 	];
 
 	function CustomIndicator() {
@@ -118,7 +118,7 @@ test('list - custom indicator', t => {
 
 	const actual = render(
 		// eslint-disable-next-line react/jsx-no-bind
-		<SelectInput items={items} indicatorComponent={CustomIndicator} />
+		<SelectInput items={items} indicatorComponent={CustomIndicator} />,
 	);
 
 	const expected = render(
@@ -127,7 +127,7 @@ test('list - custom indicator', t => {
 				<CustomIndicator />
 				<Item isSelected label="Test" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -137,17 +137,17 @@ test('list - custom item', t => {
 	const items = [
 		{
 			label: 'Test',
-			value: 'test'
-		}
+			value: 'test',
+		},
 	];
 
-	function CustomItem({label}: {label: string}) {
+	function CustomItem({label}: {readonly label: string}) {
 		return <Text>- {label}</Text>;
 	}
 
 	const actual = render(
 		// eslint-disable-next-line react/jsx-no-bind
-		<SelectInput items={items} itemComponent={CustomItem} />
+		<SelectInput items={items} itemComponent={CustomItem} />,
 	);
 
 	const expected = render(
@@ -156,7 +156,7 @@ test('list - custom item', t => {
 				<Indicator isSelected />
 				<CustomItem label="Test" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -166,12 +166,12 @@ test('list - ignore input if not focused', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput isFocused={false} items={items} />);
@@ -191,7 +191,7 @@ test('list - ignore input if not focused', async t => {
 				<Indicator />
 				<Item label="Second" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -201,16 +201,16 @@ test('list - move up with up arrow key', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -235,7 +235,7 @@ test('list - move up with up arrow key', async t => {
 				<Indicator isSelected />
 				<Item isSelected label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -245,16 +245,16 @@ test('list - move up with K key', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -279,7 +279,7 @@ test('list - move up with K key', async t => {
 				<Indicator isSelected />
 				<Item isSelected label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -289,16 +289,16 @@ test('list - move down with arrow down key', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -323,7 +323,7 @@ test('list - move down with arrow down key', async t => {
 				<Indicator />
 				<Item label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -333,16 +333,16 @@ test('list - move down with J key', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -367,7 +367,7 @@ test('list - move down with J key', async t => {
 				<Indicator />
 				<Item label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -377,16 +377,16 @@ test('list - move to the beginning of the list after reaching the end', async t 
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -415,7 +415,7 @@ test('list - move to the beginning of the list after reaching the end', async t 
 				<Indicator />
 				<Item label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -425,12 +425,12 @@ test('list - do not reset selection when the values of new items are not changed
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -442,12 +442,12 @@ test('list - do not reset selection when the values of new items are not changed
 	const newItems = [
 		{
 			label: 'First new',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second new',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	actual.rerender(<SelectInput items={newItems} />);
@@ -463,7 +463,7 @@ test('list - do not reset selection when the values of new items are not changed
 				<Indicator isSelected />
 				<Item isSelected label="Second new" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -473,12 +473,12 @@ test('list - reset selection when new items are received', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} />);
@@ -490,12 +490,12 @@ test('list - reset selection when new items are received', async t => {
 	const newItems = [
 		{
 			label: 'Third',
-			value: 'third'
+			value: 'third',
 		},
 		{
 			label: 'Fourth',
-			value: 'fourth'
-		}
+			value: 'fourth',
+		},
 	];
 
 	actual.rerender(<SelectInput items={newItems} />);
@@ -511,7 +511,7 @@ test('list - reset selection when new items are received', async t => {
 				<Indicator />
 				<Item label="Fourth" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -521,16 +521,16 @@ test('list - item limit', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} limit={2} />);
@@ -546,7 +546,7 @@ test('list - item limit', async t => {
 				<Indicator />
 				<Item label="Second" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -568,7 +568,7 @@ test('list - item limit', async t => {
 				<Indicator isSelected />
 				<Item isSelected label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -578,12 +578,12 @@ test('list - handle enter', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const onSelect = spy();
@@ -603,12 +603,12 @@ test("list - don't rotate when there are less items than limit", async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
-		}
+			value: 'second',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} limit={4} />);
@@ -630,7 +630,7 @@ test("list - don't rotate when there are less items than limit", async t => {
 				<Indicator />
 				<Item label="Second" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -640,16 +640,16 @@ test('list - rotate when there are more items than limit', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const actual = render(<SelectInput items={items} limit={2} />);
@@ -671,7 +671,7 @@ test('list - rotate when there are more items than limit', async t => {
 				<Indicator isSelected />
 				<Item isSelected label="Third" />
 			</Box>
-		</Box>
+		</Box>,
 	);
 
 	t.is(actual.lastFrame(), expected.lastFrame());
@@ -681,21 +681,21 @@ test('list - onHighlight', async t => {
 	const items = [
 		{
 			label: 'First',
-			value: 'first'
+			value: 'first',
 		},
 		{
 			label: 'Second',
-			value: 'second'
+			value: 'second',
 		},
 		{
 			label: 'Third',
-			value: 'third'
-		}
+			value: 'third',
+		},
 	];
 
 	const onHighlight = spy();
 	const {stdin} = render(
-		<SelectInput items={items} limit={2} onHighlight={onHighlight} />
+		<SelectInput items={items} limit={2} onHighlight={onHighlight} />,
 	);
 
 	await delay(100);

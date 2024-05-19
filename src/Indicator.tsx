@@ -3,7 +3,7 @@ import {Box, Text} from 'ink';
 import figures from 'figures';
 
 export type Props = {
-	isSelected?: boolean;
+	readonly isSelected?: boolean;
 };
 
 function Indicator({isSelected = false}: Props) {
