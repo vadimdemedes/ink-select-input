@@ -2,8 +2,8 @@ import * as React from 'react';
 import {Text} from 'ink';
 
 export type Props = {
-	isSelected?: boolean;
-	label: string;
+	readonly isSelected?: boolean;
+	readonly label: string;
 };
 
 function Item({isSelected = false, label}: Props) {

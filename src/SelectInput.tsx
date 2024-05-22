@@ -1,58 +1,55 @@
-import React, {type FC} from 'react';
-import {useState, useEffect, useRef, useCallback} from 'react';
+import React, {type FC, useState, useEffect, useRef, useCallback} from 'react';
 import isEqual from 'lodash.isequal';
 import arrayRotate from 'arr-rotate';
 import {Box, useInput} from 'ink';
-import Indicator from './Indicator.js';
-import type {Props as IndicatorProps} from './Indicator.js';
-import ItemComponent from './Item.js';
-import type {Props as ItemProps} from './Item.js';
+import Indicator, {type Props as IndicatorProps} from './Indicator.js';
+import ItemComponent, {type Props as ItemProps} from './Item.js';
 
 type Props<V> = {
 	/**
 	 * Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
 	 * If no `key` prop is provided, `value` will be used as the item key.
 	 */
-	items?: Array<Item<V>>;
+	readonly items?: Array<Item<V>>;
 
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components at the same time and input must be "routed" to a specific component.
 	 *
 	 * @default true
 	 */
-	isFocused?: boolean;
+	readonly isFocused?: boolean;
 
 	/**
 	 * Index of initially-selected item in `items` array.
 	 *
 	 * @default 0
 	 */
-	initialIndex?: number;
+	readonly initialIndex?: number;
 
 	/**
 	 * Number of items to display.
 	 */
-	limit?: number;
+	readonly limit?: number;
 
 	/**
 	 * Custom component to override the default indicator component.
 	 */
-	indicatorComponent?: FC<IndicatorProps>;
+	readonly indicatorComponent?: FC<IndicatorProps>;
 
 	/**
 	 * Custom component to override the default item component.
 	 */
-	itemComponent?: FC<ItemProps>;
+	readonly itemComponent?: FC<ItemProps>;
 
 	/**
 	 * Function to call when user selects an item. Item object is passed to that function as an argument.
 	 */
-	onSelect?: (item: Item<V>) => void;
+	readonly onSelect?: (item: Item<V>) => void;
 
 	/**
 	 * Function to call when user highlights an item. Item object is passed to that function as an argument.
 	 */
-	onHighlight?: (item: Item<V>) => void;
+	readonly onHighlight?: (item: Item<V>) => void;
 };
 
 export type Item<V> = {
@@ -69,17 +66,17 @@ function SelectInput<V>({
 	itemComponent = ItemComponent,
 	limit: customLimit,
 	onSelect,
-	onHighlight
+	onHighlight,
 }: Props<V>) {
 	const hasLimit =
 		typeof customLimit === 'number' && items.length > customLimit;
 	const limit = hasLimit ? Math.min(customLimit, items.length) : items.length;
 	const lastIndex = limit - 1;
 	const [rotateIndex, setRotateIndex] = useState(
-		initialIndex > lastIndex ? lastIndex - initialIndex : 0
+		initialIndex > lastIndex ? lastIndex - initialIndex : 0,
 	);
 	const [selectedIndex, setSelectedIndex] = useState(
-		initialIndex ? (initialIndex > lastIndex ? lastIndex : initialIndex) : 0
+		initialIndex ? (initialIndex > lastIndex ? lastIndex : initialIndex) : 0,
 	);
 	const previousItems = useRef<Array<Item<V>>>(items);
 
@@ -87,7 +84,7 @@ function SelectInput<V>({
 		if (
 			!isEqual(
 				previousItems.current.map(item => item.value),
-				items.map(item => item.value)
+				items.map(item => item.value),
 			)
 		) {
 			setRotateIndex(0);
@@ -157,10 +154,10 @@ function SelectInput<V>({
 				selectedIndex,
 				items,
 				onSelect,
-				onHighlight
-			]
+				onHighlight,
+			],
 		),
-		{isActive: isFocused}
+		{isActive: isFocused},
 	);
 
 	const slicedItems = hasLimit
