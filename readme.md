@@ -2,12 +2,10 @@
 
 > Select input component for [Ink](https://github.com/vadimdemedes/ink)
 
-Looking for a version compatible with Ink 2.x? Check out [this release](https://github.com/vadimdemedes/ink-select-input/tree/v3.1.2).
-
 ## Install
 
-```
-$ npm install ink-select-input
+```sh
+npm install ink-select-input
 ```
 
 ## Usage
@@ -49,7 +47,7 @@ render(<Demo />);
 
 ### items
 
-Type: `array`<br>
+Type: `array`\
 Default: `[]`
 
 Items to display in a list. Each item must be an object and have `label` and `value` props, it may also optionally have a `key` prop.
@@ -57,14 +55,14 @@ If no `key` prop is provided, `value` will be used as the item key.
 
 ### isFocused
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Listen to user's input. Useful in case there are multiple input components at the same time and input must be "routed" to a specific component.
 
 ### initialIndex
 
-Type: `number`
+Type: `number`\
 Default: `0`
 
 Index of initially-selected item in `items` array.

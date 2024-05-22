@@ -1,6 +1,6 @@
 import React, {type FC, useState, useEffect, useRef, useCallback} from 'react';
 import isEqual from 'lodash.isequal';
-import arrayRotate from 'arr-rotate';
+import arrayToRotated from 'to-rotated';
 import {Box, useInput} from 'ink';
 import Indicator, {type Props as IndicatorProps} from './Indicator.js';
 import ItemComponent, {type Props as ItemProps} from './Item.js';
@@ -110,7 +110,7 @@ function SelectInput<V>({
 					setSelectedIndex(nextSelectedIndex);
 
 					const slicedItems = hasLimit
-						? arrayRotate(items, nextRotateIndex).slice(0, limit)
+						? arrayToRotated(items, nextRotateIndex).slice(0, limit)
 						: items;
 
 					if (typeof onHighlight === 'function') {
@@ -129,7 +129,7 @@ function SelectInput<V>({
 					setSelectedIndex(nextSelectedIndex);
 
 					const slicedItems = hasLimit
-						? arrayRotate(items, nextRotateIndex).slice(0, limit)
+						? arrayToRotated(items, nextRotateIndex).slice(0, limit)
 						: items;
 
 					if (typeof onHighlight === 'function') {
@@ -139,7 +139,7 @@ function SelectInput<V>({
 
 				if (key.return) {
 					const slicedItems = hasLimit
-						? arrayRotate(items, rotateIndex).slice(0, limit)
+						? arrayToRotated(items, rotateIndex).slice(0, limit)
 						: items;
 
 					if (typeof onSelect === 'function') {
@@ -161,7 +161,7 @@ function SelectInput<V>({
 	);
 
 	const slicedItems = hasLimit
-		? arrayRotate(items, rotateIndex).slice(0, limit)
+		? arrayToRotated(items, rotateIndex).slice(0, limit)
 		: items;
 
 	return (
