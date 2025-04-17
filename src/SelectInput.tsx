@@ -1,5 +1,5 @@
+import {isDeepStrictEqual} from 'node:util';
 import React, {type FC, useState, useEffect, useRef, useCallback} from 'react';
-import isEqual from 'lodash.isequal';
 import arrayToRotated from 'to-rotated';
 import {Box, useInput} from 'ink';
 import Indicator, {type Props as IndicatorProps} from './Indicator.js';
@@ -82,7 +82,7 @@ function SelectInput<V>({
 
 	useEffect(() => {
 		if (
-			!isEqual(
+			!isDeepStrictEqual(
 				previousItems.current.map(item => item.value),
 				items.map(item => item.value),
 			)

@@ -32,12 +32,11 @@
 	],
 	"dependencies": {
 		"figures": "^6.1.0",
-		"lodash.isequal": "^4.5.0",
 		"to-rotated": "^1.0.0"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^5.0.0",
-		"@types/lodash.isequal": "^4.5.8",
+		"@types/node": "^22.14.1",
 		"@types/react": "^18.3.2",
 		"@types/sinon": "^17.0.3",
 		"@vdemedes/prettier-config": "^2.0.1",
@@ -79,5 +78,6 @@
 			"unicorn/prevent-abbreviations": "off"
 		}
 	},
-	"prettier": "@vdemedes/prettier-config"
+	"prettier": "@vdemedes/prettier-config",
+	"packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }
