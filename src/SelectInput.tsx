@@ -137,18 +137,17 @@ function SelectInput<V>({
 					}
 				}
 
-				if (input >= '1' && input <= '9') {
-					const num = Number.parseInt(input, 10);
-					const targetIndex = num - 1;
-
-					const currentSlicedItems = hasLimit
+				if (/^[1-9]$/.test(input)) {
+					const targetIndex = Number.parseInt(input, 10) - 1;
+				
+					const visibleItems = hasLimit
 						? arrayToRotated(items, rotateIndex).slice(0, limit)
 						: items;
-
-					if (targetIndex >= 0 && targetIndex < currentSlicedItems.length) {
-						const selectedItem = currentSlicedItems[targetIndex];
-						if (typeof onSelect === 'function' && selectedItem) {
-							onSelect(selectedItem);
+				
+					if (targetIndex >= 0 && targetIndex < visibleItems.length) {
+						const selectedItem = visibleItems[targetIndex];
+						if (selectedItem) {
+							onSelect?.(selectedItem);
 						}
 					}
 				}
