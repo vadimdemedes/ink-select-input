@@ -139,11 +139,11 @@ function SelectInput<V>({
 
 				if (/^[1-9]$/.test(input)) {
 					const targetIndex = Number.parseInt(input, 10) - 1;
-				
+
 					const visibleItems = hasLimit
 						? arrayToRotated(items, rotateIndex).slice(0, limit)
 						: items;
-				
+
 					if (targetIndex >= 0 && targetIndex < visibleItems.length) {
 						const selectedItem = visibleItems[targetIndex];
 						if (selectedItem) {
