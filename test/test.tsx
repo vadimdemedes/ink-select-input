@@ -708,3 +708,31 @@ test('list - onHighlight', async t => {
 	t.deepEqual(onHighlight.firstCall.args[0], items[1]);
 	t.deepEqual(onHighlight.secondCall.args[0], items[2]);
 });
+
+test('list - select item with number key', async t => {
+	const onSelect = spy();
+
+	const items = [
+		{
+			label: 'First',
+			value: 'first',
+		},
+		{
+			label: 'Second',
+			value: 'second',
+		},
+		{
+			label: 'Third',
+			value: 'third',
+		},
+	];
+
+	const {stdin} = render(<SelectInput items={items} onSelect={onSelect} />);
+
+	await delay(100);
+	stdin.write('2');
+	await delay(100);
+
+	t.true(onSelect.calledOnce);
+	t.deepEqual(onSelect.firstCall.args[0], items[1]);
+});
