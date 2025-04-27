@@ -41,6 +41,8 @@ const Demo = () => {
 render(<Demo />);
 ```
 
+The user can select the item with arrow keys (or hjkl) + enter, or by hitting the number of the option directly.
+
 <img src="media/demo.gif" width="508">
 
 ## Props

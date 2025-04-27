@@ -137,6 +137,7 @@ function SelectInput<V>({
 					}
 				}
 
+        // Enable selection directly from number keys.
 				if (/^[1-9]$/.test(input)) {
 					const targetIndex = Number.parseInt(input, 10) - 1;
 
