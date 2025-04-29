@@ -41,6 +41,8 @@ const Demo = () => {
 render(<Demo />);
 ```
 
+The user can navigate using arrow up/down keys or the <kbd>j</kbd> <kbd>k</kbd> keys, then press <kbd>return</kbd> to select. Alternatively, press the number key corresponding to an option to select it instantly.
+
 <img src="media/demo.gif" width="508">
 
 ## Props

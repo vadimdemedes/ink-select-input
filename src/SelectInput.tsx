@@ -137,6 +137,22 @@ function SelectInput<V>({
 					}
 				}
 
+				// Enable selection directly from number keys.
+				if (/^[1-9]$/.test(input)) {
+					const targetIndex = Number.parseInt(input, 10) - 1;
+
+					const visibleItems = hasLimit
+						? arrayToRotated(items, rotateIndex).slice(0, limit)
+						: items;
+
+					if (targetIndex >= 0 && targetIndex < visibleItems.length) {
+						const selectedItem = visibleItems[targetIndex];
+						if (selectedItem) {
+							onSelect?.(selectedItem);
+						}
+					}
+				}
+
 				if (key.return) {
 					const slicedItems = hasLimit
 						? arrayToRotated(items, rotateIndex).slice(0, limit)
